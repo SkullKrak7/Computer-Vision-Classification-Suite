@@ -92,7 +92,14 @@ data/
 !config*.csv
 
 # Training outputs
-models/
+models/*.pkl
+models/*.pth
+models/*.h5
+models/*.onnx
+models/**/*.pkl
+models/**/*.pth
+models/**/*.h5
+models/**/*.onnx
 checkpoints/
 logs/
 runs/
