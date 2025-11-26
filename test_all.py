@@ -28,7 +28,7 @@ def main():
     # Python module imports
     results['Python Imports'] = run_test(
         'Python Imports',
-        'python -c "from src.models.deep_learning import PyTorchCNNClassifier, TFMobileNetClassifier; from src.models.baseline import KNNClassifier, SVMClassifier; print(\'All imports successful\')"'
+        'cd python && python -c "from src.models.deep_learning import PyTorchCNNClassifier, TFMobileNetClassifier; from src.models.baseline import KNNClassifier, SVMClassifier; print(\'All imports successful\')"'
     )
     
     # GPU detection
