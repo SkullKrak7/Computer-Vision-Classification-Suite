@@ -30,6 +30,10 @@ def train_knn(data_dir='datasets/custom', img_size=(64, 64)):
     
     model.save('models/baseline/knn_model.pkl')
     
+    import json
+    with open('models/baseline/knn_metrics.json', 'w') as f:
+        json.dump(results, f, indent=2)
+    
     return model, results
 
 
@@ -46,6 +50,10 @@ def train_svm(data_dir='datasets/custom', img_size=(64, 64)):
     logger.info(f"SVM Accuracy: {results['accuracy']:.2%}")
     
     model.save('models/baseline/svm_model.pkl')
+    
+    import json
+    with open('models/baseline/svm_metrics.json', 'w') as f:
+        json.dump(results, f, indent=2)
     
     return model, results
 
