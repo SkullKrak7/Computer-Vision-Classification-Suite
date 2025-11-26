@@ -27,41 +27,57 @@ def load_model():
                 return None
 
             checkpoint = torch.load(model_path, map_location="cpu")
-            label_map = checkpoint.get("label_map", {str(i): i for i in range(6)})
+            
+            # Handle checkpoint format - could be dict or OrderedDict
+            if isinstance(checkpoint, dict) and any(k in checkpoint for k in ["model_state", "model_state_dict"]):
+                state_dict = checkpoint.get("model_state", checkpoint.get("model_state_dict"))
+                label_map = checkpoint.get("label_map", {str(i): i for i in range(6)})
+            else:
+                # Direct state_dict
+                state_dict = checkpoint
+                label_map = {str(i): i for i in range(6)}
 
-            # Simple model loading (architecture must match training)
+            # Model architecture with BatchNorm (matching saved weights)
             from torch import nn
 
             class SimpleCNN(nn.Module):
                 def __init__(self, num_classes=6):
                     super().__init__()
                     self.features = nn.Sequential(
-                        nn.Conv2d(3, 32, 3, padding=1),
-                        nn.ReLU(),
-                        nn.MaxPool2d(2),
-                        nn.Conv2d(32, 64, 3, padding=1),
-                        nn.ReLU(),
-                        nn.MaxPool2d(2),
-                        nn.Conv2d(64, 128, 3, padding=1),
-                        nn.ReLU(),
-                        nn.MaxPool2d(2),
+                        nn.Conv2d(3, 32, 3, padding=1),           # 0
+                        nn.BatchNorm2d(32),                        # 1
+                        nn.ReLU(),                                 # 2
+                        nn.MaxPool2d(2, 2),                        # 3
+                        nn.Dropout2d(0.2),                         # 4
+                        nn.Conv2d(32, 64, 3, padding=1),          # 5
+                        nn.BatchNorm2d(64),                        # 6
+                        nn.ReLU(),                                 # 7
+                        nn.MaxPool2d(2, 2),                        # 8
+                        nn.Dropout2d(0.3),                         # 9
+                        nn.Conv2d(64, 128, 3, padding=1),         # 10
+                        nn.BatchNorm2d(128),                       # 11
+                        nn.ReLU(),                                 # 12
+                        nn.MaxPool2d(2, 2)                         # 13
                     )
                     self.classifier = nn.Sequential(
-                        nn.Flatten(),
-                        nn.Linear(128 * 8 * 8, 256),
-                        nn.ReLU(),
-                        nn.Dropout(0.5),
-                        nn.Linear(256, num_classes),
+                        nn.Flatten(),                              # 0
+                        nn.Linear(128 * 8 * 8, 256),              # 1 - trained on 64x64 images
+                        nn.BatchNorm1d(256),                       # 2
+                        nn.ReLU(),                                 # 3
+                        nn.Dropout(0.5),                           # 4
+                        nn.Linear(256, num_classes)                # 5
                     )
 
                 def forward(self, x):
                     return self.classifier(self.features(x))
 
             model = SimpleCNN(num_classes=len(label_map))
-            model.load_state_dict(checkpoint["model_state_dict"])
+            model.load_state_dict(state_dict)
             model.eval()
         except Exception as e:
             print(f"Model load error: {e}")
+            import traceback
+            traceback.print_exc()
             return None
     return model
 
@@ -75,7 +91,7 @@ async def predict(file: UploadFile = File(...)):
         raise HTTPException(status_code=503, detail="Model not loaded")
 
     try:
-        # Read and preprocess image
+        # Read and preprocess image (model trained on 64x64)
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
         image = image.resize((64, 64))
@@ -88,8 +104,14 @@ async def predict(file: UploadFile = File(...)):
             probs = torch.softmax(outputs, dim=1)[0]
             top3 = torch.topk(probs, min(3, len(probs)))
 
+        # Map class indices to names
+        class_names = ["buildings", "forest", "glacier", "mountain", "sea", "street"]
         predictions = [
-            {"class": list(label_map.keys())[idx.item()], "confidence": prob.item()}
+            {
+                "class_id": idx.item(),
+                "class_name": class_names[idx.item()] if idx.item() < len(class_names) else f"class_{idx.item()}",
+                "confidence": prob.item()
+            }
             for prob, idx in zip(top3.values, top3.indices)
         ]
 
