@@ -40,7 +40,7 @@ def test_pytorch():
     print(f"Loaded model predictions: {predictions2}")
     
     assert np.array_equal(predictions, predictions2), "Predictions don't match!"
-    print("✓ PyTorch CNN test passed!")
+    print(" PyTorch CNN test passed!")
     return True
 
 def test_tensorflow():
@@ -69,7 +69,7 @@ def test_tensorflow():
     print(f"Loaded model predictions: {predictions2}")
     
     assert np.array_equal(predictions, predictions2), "Predictions don't match!"
-    print("✓ TensorFlow MobileNet test passed!")
+    print(" TensorFlow MobileNet test passed!")
     return True
 
 if __name__ == '__main__':
@@ -78,7 +78,7 @@ if __name__ == '__main__':
         tf_ok = test_tensorflow()
         
         if pytorch_ok and tf_ok:
-            print("\n✓ All tests passed!")
+            print("\n All tests passed!")
             sys.exit(0)
     except Exception as e:
         print(f"\n✗ Test failed: {e}")

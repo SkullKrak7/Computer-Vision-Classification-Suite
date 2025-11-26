@@ -1,6 +1,5 @@
 [requires]
 opencv/4.8.0
-nlohmann_json/3.11.2
 
 [generators]
 CMakeDeps

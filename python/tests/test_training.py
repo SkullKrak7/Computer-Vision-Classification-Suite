@@ -11,16 +11,16 @@ def test_config():
     assert config.epochs == 10
     assert config.batch_size == 16
     assert config.use_gpu == True
-    print("✓ Training config test passed")
+    print(" Training config test passed")
 
 def test_trainer_init():
     """Test trainer initialization"""
     config = TrainingConfig()
     # Note: Trainer needs a model, so just test config
     assert config.learning_rate == 0.001
-    print("✓ Trainer init test passed")
+    print(" Trainer init test passed")
 
 if __name__ == '__main__':
     test_config()
     test_trainer_init()
-    print("\n✓ All training tests passed!")
+    print("\n All training tests passed!")

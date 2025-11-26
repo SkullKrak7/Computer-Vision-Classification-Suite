@@ -35,11 +35,11 @@ def benchmark_pytorch():
     predictions = model.predict(X_test)
     pred_time = time.time() - start
     
-    print(f"✓ Training time: {train_time:.2f}s")
-    print(f"✓ Inference time: {pred_time:.3f}s ({len(X_test)/pred_time:.1f} imgs/sec)")
+    print(f" Training time: {train_time:.2f}s")
+    print(f" Inference time: {pred_time:.3f}s ({len(X_test)/pred_time:.1f} imgs/sec)")
     
     if torch.cuda.is_available():
-        print(f"✓ Peak GPU memory: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
+        print(f" Peak GPU memory: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
         torch.cuda.reset_peak_memory_stats()
     
     return train_time, pred_time
@@ -71,8 +71,8 @@ def benchmark_tensorflow():
     predictions = model.predict(X_test)
     pred_time = time.time() - start
     
-    print(f"✓ Training time: {train_time:.2f}s")
-    print(f"✓ Inference time: {pred_time:.3f}s ({len(X_test)/pred_time:.1f} imgs/sec)")
+    print(f" Training time: {train_time:.2f}s")
+    print(f" Inference time: {pred_time:.3f}s ({len(X_test)/pred_time:.1f} imgs/sec)")
     
     return train_time, pred_time
 
@@ -90,7 +90,7 @@ if __name__ == '__main__':
         print("=" * 60)
         print(f"PyTorch  - Train: {pt_train:.2f}s, Inference: {pt_pred:.3f}s")
         print(f"TensorFlow - Train: {tf_train:.2f}s, Inference: {tf_pred:.3f}s")
-        print("\n✓ GPU acceleration configured successfully!")
+        print("\n GPU acceleration configured successfully!")
         
     except Exception as e:
         print(f"\n✗ Benchmark failed: {e}")

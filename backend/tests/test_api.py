@@ -13,7 +13,7 @@ def test_root():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json()["status"] == "running"
-    print("✓ Root endpoint test passed")
+    print(" Root endpoint test passed")
 
 def test_metrics():
     """Test metrics endpoint"""
@@ -21,9 +21,9 @@ def test_metrics():
     assert response.status_code == 200
     data = response.json()
     assert "accuracy" in data
-    print("✓ Metrics endpoint test passed")
+    print(" Metrics endpoint test passed")
 
 if __name__ == '__main__':
     test_root()
     test_metrics()
-    print("\n✓ All API tests passed!")
+    print("\n All API tests passed!")

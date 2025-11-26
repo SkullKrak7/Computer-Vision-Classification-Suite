@@ -2,9 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <chrono>
-#include <nlohmann/json.hpp>
-
-using json = nlohmann::json;
+#include <sstream>
 
 std::map<int, std::string> loadLabelMap(const std::string& path) {
     std::map<int, std::string> labels;
@@ -15,11 +13,26 @@ std::map<int, std::string> loadLabelMap(const std::string& path) {
         return labels;
     }
     
-    json j;
-    file >> j;
-    
-    for (auto& [key, value] : j.items()) {
-        labels[std::stoi(key)] = value;
+    // Simple JSON parsing for format: {"0": "label0", "1": "label1"}
+    std::string line;
+    while (std::getline(file, line)) {
+        size_t colon = line.find(':');
+        if (colon != std::string::npos) {
+            // Extract key
+            size_t key_start = line.find('"');
+            size_t key_end = line.find('"', key_start + 1);
+            if (key_start != std::string::npos && key_end != std::string::npos) {
+                std::string key_str = line.substr(key_start + 1, key_end - key_start - 1);
+                
+                // Extract value
+                size_t val_start = line.find('"', colon);
+                size_t val_end = line.find('"', val_start + 1);
+                if (val_start != std::string::npos && val_end != std::string::npos) {
+                    std::string value = line.substr(val_start + 1, val_end - val_start - 1);
+                    labels[std::stoi(key_str)] = value;
+                }
+            }
+        }
     }
     
     return labels;

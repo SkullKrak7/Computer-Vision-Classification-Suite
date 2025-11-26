@@ -141,13 +141,13 @@ Added to requirements.txt:
 
 ## Test Results
 
-✓ PyTorch CNN: All tests passed with GPU acceleration
+ PyTorch CNN: All tests passed with GPU acceleration
   - Training: Working with AMP
   - Prediction: Working with mixed precision
   - Save/Load: Working
   - GPU utilization: Optimal
 
-✓ TensorFlow MobileNet: All tests passed with GPU acceleration
+ TensorFlow MobileNet: All tests passed with GPU acceleration
   - Training: Working with mixed precision
   - Prediction: Working with batching
   - Save/Load: Working (with .keras format)

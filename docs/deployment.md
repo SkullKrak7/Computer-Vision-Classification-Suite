@@ -62,12 +62,12 @@ npm run build
 ```nginx
 server {
     listen 80;
-    
+
     location / {
         root /app/frontend/dist;
         try_files $uri /index.html;
     }
-    
+
     location /api {
         proxy_pass http://backend:8000;
     }

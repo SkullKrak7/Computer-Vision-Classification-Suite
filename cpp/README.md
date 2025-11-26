@@ -6,7 +6,7 @@ High-performance ONNX inference using C++.
 
 ```bash
 # Ubuntu/Debian
-sudo apt-get install libopencv-dev nlohmann-json3-dev
+sudo apt-get install libopencv-dev
 
 # ONNX Runtime
 wget https://github.com/microsoft/onnxruntime/releases/download/v1.16.0/onnxruntime-linux-x64-1.16.0.tgz

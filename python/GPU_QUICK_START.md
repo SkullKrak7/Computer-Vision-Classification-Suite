@@ -51,7 +51,7 @@ python benchmark_gpu.py
 | Setting          | PyTorch | TensorFlow |
 |------------------|---------|------------|
 | Batch Size       | 32-64   | 16-32      |
-| Mixed Precision  | ✓       | ✓          |
+| Mixed Precision  |        |           |
 | Workers          | 2-4     | N/A        |
 
 ## Troubleshooting

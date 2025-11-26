@@ -7,7 +7,7 @@
 [![C++](https://img.shields.io/badge/C++-17-orange)](cpp/)
 [![React](https://img.shields.io/badge/React-18-cyan)](frontend/)
 
-## 🚀 Features
+##  Features
 
 ### Python ML Pipeline
 - **GPU Acceleration**: 15x speedup with PyTorch AMP, 6x with TensorFlow mixed precision
@@ -67,7 +67,7 @@ Computer-Vision-Classification-Suite/
 
 ```
 
-## 🎯 Quick Start
+##  Quick Start
 
 ### Option 1: Using Make (Recommended)
 
@@ -140,7 +140,7 @@ npm install
 npm run dev
 ```
 
-## 📊 Performance
+##  Performance
 
 ### GPU Acceleration (RTX 3060)
 
@@ -156,7 +156,7 @@ npm run dev
 | Python         | ~50ms           |
 | C++ (ONNX)     | ~15-20ms        |
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Python tests
@@ -172,7 +172,7 @@ cd cpp/build
 ctest
 ```
 
-## 📚 Documentation
+##  Documentation
 
 - [GPU Optimization Guide](GPU_OPTIMIZATION.md) - RTX 3060 setup and tuning
 - [Python Guide](docs/python_guide.md) - ML pipeline documentation
@@ -181,7 +181,7 @@ ctest
 - [Deployment Guide](docs/deployment.md) - Production deployment
 - [Architecture](docs/architecture.md) - System design
 
-## 🔧 Configuration
+##  Configuration
 
 ### Training Config (`configs/training/deep_learning.yaml`)
 ```yaml
@@ -243,7 +243,7 @@ const result = await api.predict(imageFile);
 console.log(result.predictions);
 ```
 
-## 🛠️ Requirements
+## 🛠 Requirements
 
 ### Python
 - Python 3.10+
@@ -263,7 +263,7 @@ console.log(result.predictions);
 - React 18
 - Vite 5
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing`)
@@ -271,24 +271,24 @@ console.log(result.predictions);
 4. Push to branch (`git push origin feature/amazing`)
 5. Open Pull Request
 
-## 📝 License
+##  License
 
 MIT License - see LICENSE file for details
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - PyTorch and TensorFlow teams
 - ONNX Runtime developers
 - OpenCV community
 - React and FastAPI maintainers
 
-## 📧 Contact
+##  Contact
 
 GitHub: [@SkullKrak7](https://github.com/SkullKrak7)
 
 ---
 
-**Status**: ✅ Production Ready | 🚀 GPU Optimized | 📦 Docker Ready
+**Status**:  Production Ready |  GPU Optimized |  Docker Ready
 
 ### 5. Export to ONNX
 

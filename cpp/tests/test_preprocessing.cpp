@@ -18,6 +18,6 @@ int main() {
     auto tensor = prep.toTensor(test_img);
     assert(tensor.size() == 224 * 224 * 3);
     
-    std::cout << "✓ Preprocessing tests passed" << std::endl;
+    std::cout << " Preprocessing tests passed" << std::endl;
     return 0;
 }
