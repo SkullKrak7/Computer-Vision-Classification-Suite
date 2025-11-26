@@ -160,8 +160,7 @@ make -j$(nproc)
 
 ```bash
 # Backend (from project root)
-cd backend
-uvicorn app.main:app --reload
+uvicorn backend.app.main:app --reload
 
 # Frontend (new terminal)
 cd frontend
