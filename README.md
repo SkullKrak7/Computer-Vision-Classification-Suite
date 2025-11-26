@@ -184,14 +184,24 @@ npm run dev
 | Python TF      | ~40ms           | 25 img/s   |
 | C++ ONNX       | ~15-20ms        | 50-65 img/s|
 
-### Model Performance (Intel Images Dataset)
+### Model Performance (Intel Images Dataset - 6 Classes)
 
-| Model                  | Train Acc | Val Acc | Gap   | Status    |
-|------------------------|-----------|---------|-------|-----------|
-| TensorFlow MobileNetV2 | 94%       | 80%     | 14%   | Optimal   |
-| PyTorch CNN            | 84%       | 60%     | 24%   | Overfitting|
-| SVM                    | TBD       | TBD     | TBD   | Tuning    |
-| KNN                    | TBD       | TBD     | TBD   | Tuning    |
+| Model                  | Accuracy | Precision | Recall | F1 Score | Status      |
+|------------------------|----------|-----------|--------|----------|-------------|
+| PyTorch CNN            | 87.56%   | 87.42%    | 87.56% | 87.45%   | ✅ Tuned    |
+| TensorFlow MobileNetV2 | 82.34%   | 81.98%    | 82.34% | 82.12%   | ✅ Tuned    |
+| SVM (RBF, C=10.0)      | 64.80%   | 64.77%    | 64.80% | 64.74%   | ✅ Tuned    |
+| KNN (k=9)              | 40.51%   | 52.03%    | 40.51% | 36.51%   | ✅ Tuned    |
+
+**Baseline Model Details:**
+- **SVM**: Tuned with kernels ['linear', 'rbf'] and C values [0.1, 1.0, 10.0]
+  - Best: RBF kernel with C=10.0
+  - Training time: ~5 minutes on 14,034 samples
+- **KNN**: Tuned with k values [1, 3, 5, 7, 9]
+  - Best: k=9 neighbors
+  - Training time: ~2 minutes (no actual training, just storing data)
+
+All models trained and evaluated on Intel Natural Scenes dataset with 64x64 images.
 
 ## GPU Optimization
 
