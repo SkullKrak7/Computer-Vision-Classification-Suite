@@ -21,8 +21,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # Source files
 set(SOURCES
     src/main.cpp
-    src/camera_capture.cpp
-    src/model_inference.cpp
+    src/inference_engine.cpp
+    src/model_loader.cpp
     src/preprocessor.cpp
     src/utils.cpp
 )
