@@ -12,6 +12,17 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
 
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=development
+
   python:
     build:
       context: ..
