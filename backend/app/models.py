@@ -1,6 +1,5 @@
 """Pydantic models for API"""
 
-
 from pydantic import BaseModel
 
 

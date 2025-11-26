@@ -1,7 +1,6 @@
 """Model loading utilities"""
 
 
-
 class ModelLoader:
     """Load and cache models"""
 
