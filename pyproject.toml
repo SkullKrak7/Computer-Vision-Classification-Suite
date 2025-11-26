@@ -22,6 +22,34 @@ gpu = ["nvidia-cuda-runtime-cu12", "nvidia-cuda-nvcc-cu12", "nvidia-cudnn-cu12"]
 
 [tool.black]
 line-length = 100
+target-version = ['py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  \.git
+  | \.venv
+  | venv
+  | build
+  | dist
+  | node_modules
+  | datasets
+  | models
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4"]
+ignore = ["E501", "N803", "N806"]
+exclude = [".git", ".venv", "venv", "build", "dist", "node_modules", "datasets", "models"]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+"test_*.py" = ["N802"]
 
 [tool.pytest.ini_options]
-testpaths = ["python/tests"]
+testpaths = ["python/tests", "backend/tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+addopts = "-v --cov=python --cov=backend --cov-report=term-missing --cov-report=xml"
