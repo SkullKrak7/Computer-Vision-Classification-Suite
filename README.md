@@ -158,7 +158,7 @@ make -j$(nproc)
 
 ```bash
 # Backend
-cd backend
+from project root:
 uvicorn app.main:app --reload
 
 # Frontend (new terminal)
@@ -188,30 +188,30 @@ npm run dev
 
 **All Models Trained & Integrated:**
 
-| Model                      | Accuracy | Precision | Recall | F1 Score | Status      |
-|----------------------------|----------|-----------|--------|----------|-------------|
-| TensorFlow MobileNetV2     | 88.92%   | 89.01%    | 88.92% | 88.83%   | ✅ Complete |
-| PyTorch CNN                | 87.28%   | 87.38%    | 87.28% | 87.24%   | ✅ Complete |
-| SVM (RBF, C=10.0)          | 64.80%   | 64.77%    | 64.80% | 64.74%   | ✅ Complete |
-| KNN (k=9)                  | 40.51%   | 52.03%    | 40.51% | 36.51%   | ✅ Complete |
+| Model                      | Accuracy | Precision | Recall | F1 Score |
+|----------------------------|----------|-----------|--------|----------|
+| TensorFlow MobileNetV2     | 88.92%   | 89.01%    | 88.92% | 88.83%   |
+| PyTorch CNN                | 87.28%   | 87.38%    | 87.28% | 87.24%   |
+| SVM (RBF, C=10.0)          | 64.80%   | 64.77%    | 64.80% | 64.74%   |
+| KNN (k=9)                  | 40.51%   | 52.03%    | 40.51% | 36.51%   | 
 
 **Model Details:**
 
-- **TensorFlow MobileNetV2** (🥇 Best Overall)
+- **TensorFlow MobileNetV2** (Best Overall)
   - Transfer learning with ImageNet pretrained weights
   - Training: 6 epochs with early stopping
   - Image size: 96x96, Batch size: 16
   - Model size: 9.3 MB
   - **Recommended for production deployment**
 
-- **PyTorch CNN** (🥈 Strong Custom Architecture)
+- **PyTorch CNN** (Strong Custom Architecture)
   - Custom 3-layer CNN with BatchNorm and Dropout
   - Training: 23 epochs with early stopping
   - Image size: 64x64, Batch size: 32
   - Model size: 8.4 MB
   - Techniques: Data augmentation, class weights, LR scheduling
 
-- **SVM** (🥉 Best Baseline)
+- **SVM** (Best Baseline)
   - Tuned with kernels ['linear', 'rbf'] and C values [0.1, 1.0, 10.0]
   - Best: RBF kernel with C=10.0
   - Training time: ~5 minutes on 14,034 samples
@@ -347,62 +347,7 @@ Services:
 - **Backend**: http://localhost:8000
 - **API Docs**: http://localhost:8000/docs
 
-### Production Checklist
-- [x] Docker containerization
-- [x] Environment variables
-- [x] Health checks
-- [x] Auto-generated API docs
-- [x] Comprehensive tests
-- [x] GPU optimization
-- [x] Dynamic metrics loading
-- [x] Error handling
-
 ## Project Status
-
-### Status: 100% COMPLETE & PRODUCTION READY
-
-**Latest Updates (2025-11-26):**
-
-1. **All Models Trained & Integrated** ✅
-   - TensorFlow MobileNetV2: 88.92% accuracy (best overall)
-   - PyTorch CNN: 87.28% accuracy (custom architecture)
-   - SVM: 64.80% accuracy (best baseline)
-   - KNN: 40.51% accuracy (reference baseline)
-   - All models with proper hyperparameter tuning and early stopping
-
-2. **Full Stack Integration** ✅
-   - Backend API updated to serve all 4 models
-   - Frontend UI updated with model selection and visualization
-   - Dynamic metrics loading from JSON files
-   - Model comparison charts
-
-3. **Training Pipeline Complete** ✅
-   - Hyperparameter grid search for all models
-   - Early stopping for deep learning models
-   - Data augmentation (rotation, flip, brightness)
-   - Class weight balancing
-   - Learning rate scheduling
-   - Proper train/validation splits
-
-4. **Documentation & Verification** ✅
-   - TRAINING_RESULTS.md with comprehensive analysis
-   - COMPLETION_SUMMARY.md with deployment guide
-   - verify_api.py script for model verification
-   - All model files and metadata verified
-
-### Completed Components
-
-- [x] Python ML Pipeline (GPU accelerated)
-- [x] C++ Inference Engine (ONNX Runtime)
-- [x] React Frontend (Live inference & monitoring)
-- [x] FastAPI Backend (Dynamic metrics)
-- [x] **All 4 Models Trained** (KNN, SVM, PyTorch, TensorFlow)
-- [x] **Hyperparameter Tuning** (Grid search + early stopping)
-- [x] **Full Integration** (Backend + Frontend)
-- [x] Docker Deployment
-- [x] Comprehensive Testing
-- [x] Complete Documentation
-- [x] OOP Architecture
 
 ### Performance Achievements
 
@@ -506,7 +451,7 @@ This project was **entirely developed using Kiro CLI**, Amazon Web Services' AI-
 - **Testing**: Complete test suite developed
 - **Production Ready**: Docker and deployment configs
 
-**30+ systematic commits** demonstrate AI-assisted development workflow.
+**45+ systematic commits** demonstrate AI-assisted development workflow.
 
 Learn more: [AWS Kiro](https://aws.amazon.com/)
 
@@ -536,4 +481,4 @@ GitHub: [@SkullKrak7](https://github.com/SkullKrak7)
 
 ---
 
-**Status**: Production Ready | GPU Optimized | Docker Ready | Built with Kiro CLI | 30+ Commits
+**Status**: Production Ready | GPU Optimized | Docker Ready | Built with Kiro CLI | 45+ Commits
