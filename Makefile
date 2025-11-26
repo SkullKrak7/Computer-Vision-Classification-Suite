@@ -1,5 +1,7 @@
 .PHONY: setup train test benchmark clean format lint lint-fix ci install-hooks
 
+VENV = venv/bin/activate
+
 setup:
 	@bash scripts/setup.sh
 
@@ -13,25 +15,25 @@ export:
 	@bash scripts/export_onnx.sh
 
 test:
-	@pytest python/tests/ backend/tests/ -v
+	@. $(VENV) && pytest python/tests/ backend/tests/ -v
 
 format:
-	@black python/ backend/
+	@. $(VENV) && black python/ backend/
 	@echo "✓ Formatted with Black"
 
 lint:
-	@ruff check python/ backend/
+	@. $(VENV) && ruff check python/ backend/
 	@echo "✓ Linted with Ruff"
 
 lint-fix:
-	@ruff check --fix python/ backend/
+	@. $(VENV) && ruff check --fix python/ backend/
 	@echo "✓ Fixed with Ruff"
 
 ci: format lint test
 	@echo "✓ CI checks passed"
 
 install-hooks:
-	@pre-commit install
+	@. $(VENV) && pre-commit install
 	@echo "✓ Pre-commit hooks installed"
 
 clean:
