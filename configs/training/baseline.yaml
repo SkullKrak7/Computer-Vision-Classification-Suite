@@ -1,0 +1,13 @@
+model:
+  type: "baseline"
+  algorithm: "random_forest"  # or "svm", "knn"
+  
+training:
+  n_estimators: 100
+  max_depth: 10
+  random_state: 42
+  
+data:
+  img_size: [64, 64]
+  normalize: true
+  flatten: true

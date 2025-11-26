@@ -1,0 +1,16 @@
+inference:
+  model_path: "models/pytorch/best_model.pth"
+  framework: "pytorch"
+  batch_size: 32
+  
+preprocessing:
+  img_size: [224, 224]
+  normalize: true
+  
+gpu:
+  enabled: true
+  device: "cuda:0"
+  
+output:
+  confidence_threshold: 0.5
+  top_k: 3

@@ -1,0 +1,23 @@
+model:
+  type: "deep_learning"
+  framework: "pytorch"  # or "tensorflow"
+  architecture: "cnn"  # or "mobilenet"
+  
+training:
+  epochs: 20
+  batch_size: 32
+  learning_rate: 0.001
+  validation_split: 0.2
+  early_stopping_patience: 5
+  
+gpu:
+  enabled: true
+  mixed_precision: true
+  
+data:
+  img_size: [224, 224]
+  normalize: true
+  augmentation:
+    flip: true
+    rotate: true
+    brightness: true
