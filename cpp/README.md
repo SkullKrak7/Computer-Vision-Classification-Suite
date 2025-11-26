@@ -1,5 +1,7 @@
 # C++ Inference Engine
 
+**Built with Kiro CLI** - High-performance ONNX inference developed using Amazon's AI-powered development assistant.
+
 High-performance ONNX inference using C++.
 
 ## Dependencies

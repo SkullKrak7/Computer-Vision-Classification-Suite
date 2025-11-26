@@ -1,5 +1,7 @@
 # API Documentation
 
+**Built with Kiro CLI** - The FastAPI backend was developed using Amazon's AI-powered development assistant.
+
 ## Backend API
 
 Base URL: `http://localhost:8000`

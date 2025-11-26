@@ -1,5 +1,7 @@
 # Architecture Overview
 
+**Built with Kiro CLI** - System architecture designed and implemented using Amazon's AI-powered development assistant.
+
 ## Project Structure
 
 ```

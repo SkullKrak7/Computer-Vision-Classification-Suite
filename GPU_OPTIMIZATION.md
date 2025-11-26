@@ -1,5 +1,7 @@
 # GPU Optimization Guide - RTX 3060 12GB
 
+**Developed using Kiro CLI** - This GPU optimization guide and all implementations were created through AI-assisted development with Amazon's Kiro CLI.
+
 ## Current Configuration
 
 ### Hardware

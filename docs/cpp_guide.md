@@ -1,5 +1,7 @@
 # C++ Implementation Guide
 
+**Built with Kiro CLI** - The C++ inference engine was developed using Amazon's AI-powered development assistant.
+
 ## Prerequisites
 
 ### Ubuntu/Debian

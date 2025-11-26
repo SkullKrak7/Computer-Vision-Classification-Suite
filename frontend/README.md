@@ -1,5 +1,7 @@
 # Frontend - React Web Interface
 
+**Built with Kiro CLI** - React components developed using Amazon's AI-powered development assistant.
+
 ## Setup
 
 ```bash

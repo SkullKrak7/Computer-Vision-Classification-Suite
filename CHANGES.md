@@ -1,5 +1,7 @@
 # Changes Summary - 2025-11-26
 
+**Project Built with Kiro CLI** - All development performed using Amazon's AI-powered development assistant.
+
 ## GPU Optimization for RTX 3060 12GB
 
 ### CUDA Toolkit Installation

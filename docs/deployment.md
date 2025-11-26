@@ -1,5 +1,7 @@
 # Deployment Guide
 
+**Built with Kiro CLI** - All deployment configurations were created using Amazon's AI-powered development assistant.
+
 ## Local Development
 
 ### Python Backend

@@ -1,5 +1,7 @@
 # Python Implementation Guide
 
+**Built with Kiro CLI** - All Python components were developed using Amazon's AI-powered development assistant.
+
 ## Quick Start
 
 ```bash

@@ -1,11 +1,24 @@
 # Computer Vision Classification Suite
 
-**Complete multi-language ML project** with Python training, C++ inference, React frontend, and FastAPI backend for production-ready image classification.
+**Built entirely from ground up using Kiro CLI** - A complete multi-language ML project with Python training, C++ inference, React frontend, and FastAPI backend for production-ready image classification.
+
+> This entire project was developed using Kiro CLI, Amazon's AI-powered development assistant, demonstrating the capability to build production-grade systems through AI-assisted development.
 
 [![GPU Accelerated](https://img.shields.io/badge/GPU-RTX%203060-green)](GPU_OPTIMIZATION.md)
 [![Python](https://img.shields.io/badge/Python-3.12-blue)](python/)
 [![C++](https://img.shields.io/badge/C++-17-orange)](cpp/)
 [![React](https://img.shields.io/badge/React-18-cyan)](frontend/)
+[![Built with Kiro CLI](https://img.shields.io/badge/Built%20with-Kiro%20CLI-blueviolet)](https://aws.amazon.com/)
+
+## About This Project
+
+This Computer Vision Classification Suite was **built entirely using Kiro CLI**, Amazon Web Services' AI assistant. Every component - from initial architecture design to final production deployment - was developed through AI-assisted programming, showcasing:
+
+- **AI-Driven Development**: Complete system architecture designed and implemented via Kiro CLI
+- **Multi-Language Integration**: Python, C++, and JavaScript components coordinated through AI assistance
+- **Production Quality**: Professional-grade code, testing, and documentation generated with AI
+- **Best Practices**: Modern software engineering patterns implemented throughout
+- **GPU Optimization**: Advanced performance tuning achieved through AI-guided development
 
 ##  Features
 
@@ -288,7 +301,25 @@ GitHub: [@SkullKrak7](https://github.com/SkullKrak7)
 
 ---
 
-**Status**:  Production Ready |  GPU Optimized |  Docker Ready
+## Built with Kiro CLI
+
+This project was **entirely developed using Kiro CLI**, Amazon Web Services' AI-powered development assistant. Kiro CLI enabled:
+
+- **Rapid Development**: Complete system built systematically with AI assistance
+- **Code Quality**: Professional-grade code generation and review
+- **Multi-Language Expertise**: Seamless integration across Python, C++, and JavaScript
+- **Best Practices**: Modern patterns and optimizations implemented throughout
+- **Documentation**: Comprehensive guides and API documentation generated
+- **Testing**: Complete test suite developed and verified
+- **Production Ready**: Deployment configurations and Docker setup
+
+**Kiro CLI demonstrates the future of AI-assisted software development**, enabling developers to build complex, production-ready systems efficiently while maintaining high code quality and professional standards.
+
+Learn more about Kiro CLI: [AWS Kiro](https://aws.amazon.com/)
+
+---
+
+**Status**: Production Ready | GPU Optimized | Docker Ready | Built with Kiro CLI
 
 ### 5. Export to ONNX
 
