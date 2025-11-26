@@ -3,16 +3,38 @@ TensorFlow MobileNetV2 transfer learning classifier
 Uses pre-trained MobileNetV2 for efficient image classification
 """
 
+import os
+import sys
+from pathlib import Path
+
+# Configure CUDA paths for pip-installed CUDA toolkit
+venv_path = Path(sys.executable).parent.parent
+cuda_path = venv_path / 'lib' / f'python{sys.version_info.major}.{sys.version_info.minor}' / 'site-packages' / 'nvidia' / 'cuda_nvcc'
+if cuda_path.exists():
+    os.environ['XLA_FLAGS'] = f'--xla_gpu_cuda_data_dir={cuda_path}'
+    os.environ['PATH'] = f"{cuda_path / 'bin'}:{os.environ.get('PATH', '')}"
+
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from pathlib import Path
 import logging
 
 logger = logging.getLogger(__name__)
+
+# Configure GPU for optimal performance
+gpus = tf.config.list_physical_devices('GPU')
+if gpus:
+    try:
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+        tf.config.set_soft_device_placement(True)
+        tf.config.optimizer.set_jit(True)  # Enable XLA
+        logger.info(f"GPU configured: {len(gpus)} device(s), XLA enabled")
+    except RuntimeError as e:
+        logger.warning(f"GPU config error: {e}")
 
 
 class TFMobileNetClassifier:
@@ -21,7 +43,7 @@ class TFMobileNetClassifier:
     """
     
     def __init__(self, num_classes: int, input_shape: tuple = (224, 224, 3),
-                 learning_rate: float = 0.001, fine_tune: bool = False):
+                 learning_rate: float = 0.001, fine_tune: bool = False, use_mixed_precision: bool = True):
         """
         Initialize MobileNetV2 classifier
         
@@ -30,11 +52,16 @@ class TFMobileNetClassifier:
             input_shape: Input image shape (H, W, C)
             learning_rate: Learning rate for optimizer
             fine_tune: Whether to fine-tune base model layers
+            use_mixed_precision: Use mixed precision for faster training on GPU
         """
         self.num_classes = num_classes
         self.input_shape = input_shape
         self.learning_rate = learning_rate
         self.fine_tune = fine_tune
+        
+        if use_mixed_precision and len(tf.config.list_physical_devices('GPU')) > 0:
+            tf.keras.mixed_precision.set_global_policy('mixed_float16')
+            logger.info("Mixed precision enabled (float16)")
         
         self.model = self._build_model()
         self.label_map = None
@@ -122,20 +149,20 @@ class TFMobileNetClassifier:
         logger.info("MobileNetV2 training complete")
         return history
     
-    def predict(self, X: np.ndarray) -> np.ndarray:
-        """Run inference"""
+    def predict(self, X: np.ndarray, batch_size: int = 32) -> np.ndarray:
+        """Run inference with batching"""
         if not self.is_trained:
             raise RuntimeError("Model not trained. Call train() first.")
         
-        predictions = self.model.predict(X, verbose=0)
+        predictions = self.model.predict(X, verbose=0, batch_size=batch_size)
         return predictions.argmax(axis=1)
     
-    def predict_proba(self, X: np.ndarray) -> np.ndarray:
-        """Get class probabilities"""
+    def predict_proba(self, X: np.ndarray, batch_size: int = 32) -> np.ndarray:
+        """Get class probabilities with batching"""
         if not self.is_trained:
             raise RuntimeError("Model not trained. Call train() first.")
         
-        return self.model.predict(X, verbose=0)
+        return self.model.predict(X, verbose=0, batch_size=batch_size)
     
     def evaluate(self, X_test: np.ndarray, y_test: np.ndarray) -> dict:
         """Evaluate model"""
@@ -159,6 +186,8 @@ class TFMobileNetClassifier:
     def save(self, filepath: str):
         """Save model"""
         filepath = Path(filepath)
+        if not filepath.suffix:
+            filepath = filepath.with_suffix('.keras')
         filepath.parent.mkdir(parents=True, exist_ok=True)
         
         self.model.save(filepath)
@@ -182,6 +211,8 @@ class TFMobileNetClassifier:
         import json
         
         filepath = Path(filepath)
+        if not filepath.suffix:
+            filepath = filepath.with_suffix('.keras')
         metadata_path = filepath.parent / f"{filepath.stem}_metadata.json"
         
         with open(metadata_path, 'r') as f:
