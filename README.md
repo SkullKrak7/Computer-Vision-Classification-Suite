@@ -186,22 +186,24 @@ npm run dev
 
 ### Model Performance (Intel Images Dataset - 6 Classes)
 
-| Model                  | Accuracy | Precision | Recall | F1 Score | Status      |
-|------------------------|----------|-----------|--------|----------|-------------|
-| PyTorch CNN            | 87.56%   | 87.42%    | 87.56% | 87.45%   | ✅ Tuned    |
-| TensorFlow MobileNetV2 | 82.34%   | 81.98%    | 82.34% | 82.12%   | ✅ Tuned    |
-| SVM (RBF, C=10.0)      | 64.80%   | 64.77%    | 64.80% | 64.74%   | ✅ Tuned    |
-| KNN (k=9)              | 40.51%   | 52.03%    | 40.51% | 36.51%   | ✅ Tuned    |
+**Baseline Models (Verified Metrics):**
+
+| Model             | Accuracy | Precision | Recall | F1 Score | Status      |
+|-------------------|----------|-----------|--------|----------|-------------|
+| SVM (RBF, C=10.0) | 64.80%   | 64.77%    | 64.80% | 64.74%   | ✅ Tuned    |
+| KNN (k=9)         | 40.51%   | 52.03%    | 40.51% | 36.51%   | ✅ Tuned    |
 
 **Baseline Model Details:**
 - **SVM**: Tuned with kernels ['linear', 'rbf'] and C values [0.1, 1.0, 10.0]
   - Best: RBF kernel with C=10.0
   - Training time: ~5 minutes on 14,034 samples
+  - Model size: 904 MB
 - **KNN**: Tuned with k values [1, 3, 5, 7, 9]
   - Best: k=9 neighbors
-  - Training time: ~2 minutes (no actual training, just storing data)
+  - Training time: ~2 minutes (instance-based learning)
+  - Model size: 527 MB
 
-All models trained and evaluated on Intel Natural Scenes dataset with 64x64 images.
+All baseline models trained and evaluated on Intel Natural Scenes dataset with 64x64 images.
 
 ## GPU Optimization
 

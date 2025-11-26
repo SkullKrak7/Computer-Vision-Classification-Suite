@@ -10,8 +10,6 @@ router = APIRouter()
 METRICS_MAP = {
     "knn": "models/baseline/knn_metrics.json",
     "svm": "models/baseline/svm_metrics.json",
-    "pytorch_cnn": "models/pytorch_cnn_tuned_metadata.json",
-    "tensorflow_mobilenet": "models/tensorflow_mobilenet_tuned_metadata.json"
 }
 
 @router.get("/model/{model_id}", response_model=MetricsResponse)
