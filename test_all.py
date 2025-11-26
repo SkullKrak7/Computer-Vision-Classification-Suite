@@ -54,6 +54,18 @@ def main():
         'python backend/tests/test_api.py'
     )
     
+    # Frontend tests
+    results['Frontend Build'] = run_test(
+        'Frontend Build',
+        'cd frontend && node test_frontend.js'
+    )
+    
+    # C++ tests
+    results['C++ Inference'] = run_test(
+        'C++ Inference',
+        'cd cpp && ./test_cpp.sh'
+    )
+    
     # Print summary
     print(f"\n{'='*60}")
     print("TEST SUMMARY")
