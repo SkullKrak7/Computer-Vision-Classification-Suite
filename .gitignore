@@ -285,3 +285,9 @@ site/
 .sass-cache/
 models/*.keras
 models/**/*.keras
+
+# Documentation files
+CI_CD.md
+COMPLETION_SUMMARY.md
+PROJECT_GUIDE.txt
+TRAINING_RESULTS.md

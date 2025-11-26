@@ -16,6 +16,7 @@
 - [Quick Start](#quick-start)
 - [Performance](#performance)
 - [GPU Optimization](#gpu-optimization)
+- [CI/CD Pipeline](#cicd-pipeline)
 - [Testing](#testing)
 - [API Documentation](#api-documentation)
 - [Deployment](#deployment)
@@ -282,6 +283,44 @@ print(f"GPU Memory: {torch.cuda.memory_allocated()/1e9:.2f} GB")
 |-------------|-----------|-----------------|---------|
 | PyTorch     | 32-64     | Enabled         | 2-4     |
 | TensorFlow  | 16-32     | Enabled         | N/A     |
+
+## CI/CD Pipeline
+
+![CI](https://github.com/SkullKrak7/Computer-Vision-Classification-Suite/workflows/CI/badge.svg)
+![Docker](https://github.com/SkullKrak7/Computer-Vision-Classification-Suite/workflows/Docker%20Build/badge.svg)
+
+### Automated Workflows
+
+**GitHub Actions** runs on every push and pull request:
+
+- **Linting & Formatting**: Black (code formatting) + Ruff (fast linting)
+- **Testing**: Pytest with coverage reporting
+- **Docker Builds**: Automated container builds for backend, frontend, and Python services
+
+### Local Development Commands
+
+```bash
+make format    # Format code with Black
+make lint      # Check code with Ruff
+make lint-fix  # Auto-fix linting issues
+make test      # Run pytest with coverage
+make ci        # Run all CI checks locally
+```
+
+### Tools
+
+- **Black**: Code formatting (line-length: 100)
+- **Ruff**: Fast Python linting (E, F, I, N, W, UP, B, C4)
+- **Pytest**: Testing with coverage
+- **Pydantic**: Data validation in FastAPI
+- **Pre-commit**: Git hooks for automated checks
+
+### Configuration
+
+All tool settings in `pyproject.toml`:
+- Black formatting rules
+- Ruff linting rules
+- Pytest configuration
 
 ## Testing
 
