@@ -2,6 +2,36 @@
 
 **Project Built with Kiro CLI** - All development performed using Amazon's AI-powered development assistant.
 
+## Latest Updates (2025-11-26)
+
+### OOP Refactoring and Structure Cleanup
+
+**Code Architecture**
+- Created BaseModel abstract class (python/src/models/base.py)
+- Refactored PyTorchCNNClassifier to inherit from BaseModel
+- Implemented polymorphic interface: train(), predict(), save(), load()
+- Consolidated test suite into OOP ModelTester class
+
+**Structure Cleanup**
+- Removed duplicate files: python/test_models.py
+- Removed untracked directories: cpp_inference/, python/models/
+- Consolidated to 17 Python source files
+- Maintained all functionality, improved modularity
+
+**Kaggle Dataset Testing**
+- Tested PyTorch CNN on Intel Images dataset
+- Results: Train 53.33%, Val 33.33%, Gap 20%
+- Analysis: Overfitting detected
+- Recommendations: Increase dropout, add augmentation
+- Model saved: models/pytorch/intel_tested.pth
+
+**Testing Status**
+- PyTorch CNN: All unit tests PASS + Kaggle dataset tested
+- TensorFlow MobileNetV2: All unit tests PASS
+- Total commits: 26
+
+---
+
 ## GPU Optimization for RTX 3060 12GB
 
 ### CUDA Toolkit Installation

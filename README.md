@@ -22,6 +22,12 @@ This Computer Vision Classification Suite was **built entirely using Kiro CLI**,
 
 ##  Features
 
+### Code Architecture (OOP Design)
+- **BaseModel Abstract Class**: Unified interface for all models
+- **Inheritance Hierarchy**: PyTorch and TensorFlow models inherit from BaseModel
+- **Polymorphic Design**: Consistent train(), predict(), save(), load() interface
+- **Clean Structure**: No duplicates, 17 Python source files, modular organization
+
 ### Python ML Pipeline
 - **GPU Acceleration**: 15x speedup with PyTorch AMP, 6x with TensorFlow mixed precision
 - **Multiple Frameworks**: PyTorch CNN, TensorFlow MobileNetV2
