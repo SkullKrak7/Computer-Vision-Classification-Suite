@@ -40,11 +40,13 @@ extend-exclude = '''
 [tool.ruff]
 line-length = 100
 target-version = "py310"
-select = ["E", "F", "I", "N", "W", "UP", "B", "C4"]
-ignore = ["E501", "N803", "N806"]
 exclude = [".git", ".venv", "venv", "build", "dist", "node_modules", "datasets", "models"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4"]
+ignore = ["E501", "N803", "N806", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
 "test_*.py" = ["N802"]
 
