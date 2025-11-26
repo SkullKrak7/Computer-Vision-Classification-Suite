@@ -2,7 +2,8 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import inference, training, metrics
+
+from .routes import inference, metrics, training
 
 app = FastAPI(title="CV Classification API")
 
@@ -17,6 +18,7 @@ app.add_middleware(
 app.include_router(inference.router, prefix="/api/inference", tags=["inference"])
 app.include_router(training.router, prefix="/api/training", tags=["training"])
 app.include_router(metrics.router, prefix="/api/metrics", tags=["metrics"])
+
 
 @app.get("/")
 def root():

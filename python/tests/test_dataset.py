@@ -1,10 +1,13 @@
 """Test dataset loading"""
+
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 import numpy as np
-from data import DatasetLoader, DataConfig, augment_image
+from data import DataConfig, augment_image
+
 
 def test_augmentation():
     """Test image augmentation"""
@@ -13,6 +16,7 @@ def test_augmentation():
     assert augmented.shape == img.shape
     print(" Augmentation test passed")
 
+
 def test_config():
     """Test data config"""
     config = DataConfig(img_size=(128, 128), test_size=0.3)
@@ -20,7 +24,8 @@ def test_config():
     assert config.test_size == 0.3
     print(" Config test passed")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     test_augmentation()
     test_config()
     print("\n All dataset tests passed!")

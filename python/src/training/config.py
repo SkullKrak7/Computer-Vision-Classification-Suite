@@ -6,6 +6,7 @@ from dataclasses import dataclass
 @dataclass
 class TrainingConfig:
     """Training hyperparameters"""
+
     epochs: int = 20
     batch_size: int = 32
     learning_rate: float = 0.001

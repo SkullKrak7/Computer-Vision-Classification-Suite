@@ -1,9 +1,12 @@
 """Test training utilities"""
+
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
-from training import TrainingConfig, Trainer
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from training import TrainingConfig
+
 
 def test_config():
     """Test training config"""
@@ -13,6 +16,7 @@ def test_config():
     assert config.use_gpu == True
     print(" Training config test passed")
 
+
 def test_trainer_init():
     """Test trainer initialization"""
     config = TrainingConfig()
@@ -20,7 +24,8 @@ def test_trainer_init():
     assert config.learning_rate == 0.001
     print(" Trainer init test passed")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     test_config()
     test_trainer_init()
     print("\n All training tests passed!")
