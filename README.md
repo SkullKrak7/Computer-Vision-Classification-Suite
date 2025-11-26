@@ -69,10 +69,11 @@ Computer-Vision-Classification-Suite/
 │   │   ├── evaluation/ # Metrics & benchmarking
 │   │   └── export/     # ONNX export
 │   ├── scripts/        # Training scripts
+│   │   ├── auto_tune.py
 │   │   ├── train_cnn.py
 │   │   ├── train_baseline.py
-│   │   ├── auto_tune.py
-│   │   └── tune_baseline.py
+│   │   ├── tune_baseline.py
+│   │   └── benchmark_all.py
 │   └── tests/          # Unit tests
 ├── cpp/                # C++ inference engine
 │   ├── include/        # Headers
@@ -158,8 +159,8 @@ make -j$(nproc)
 #### Frontend & Backend
 
 ```bash
-# Backend
-from project root:
+# Backend (from project root)
+cd backend
 uvicorn app.main:app --reload
 
 # Frontend (new terminal)
@@ -325,13 +326,12 @@ All tool settings in `pyproject.toml`:
 ## Testing
 
 ```bash
-# Python tests
-python python/tests/test_dataset.py
-python python/tests/test_training.py
-python python/test_models.py
+# Run all tests with pytest
+make test
 
-# Backend tests
-python backend/tests/test_api.py
+# Or run individually
+pytest python/tests/ -v
+pytest backend/tests/ -v
 
 # C++ tests
 cd cpp/build
@@ -386,17 +386,15 @@ Services:
 - **Backend**: http://localhost:8000
 - **API Docs**: http://localhost:8000/docs
 
-## Project Status
-
-### Performance Achievements
-
-- **88.92% accuracy** with TensorFlow MobileNetV2 (production-ready)
-- **87.28% accuracy** with PyTorch CNN (custom architecture)
-- **23-24% improvement** over best baseline (SVM)
-- **15x GPU speedup** for PyTorch training
-- **6x GPU speedup** for TensorFlow training
-- **2-3x faster** C++ inference vs Python
-- **Optimal bias-variance** tradeoff achieved
+### Production Checklist
+- [x] Docker containerization
+- [x] CI/CD pipeline with GitHub Actions
+- [x] Environment variables
+- [x] Health checks
+- [x] Auto-generated API docs
+- [x] Comprehensive tests
+- [x] GPU optimization
+- [x] Dynamic metrics loading
 
 ## Configuration
 
