@@ -1,0 +1,1 @@
+{"label_map": {"0": "buildings", "1": "forest", "2": "glacier", "3": "mountain", "4": "sea", "5": "street"}, "num_classes": 6, "input_shape": [224, 224, 3], "learning_rate": 0.0001, "fine_tune": false}
