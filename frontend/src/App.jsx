@@ -7,12 +7,14 @@ import DatasetStats from './components/DatasetStats';
 import { api } from './services/api';
 
 function App() {
-  const [selectedModel, setSelectedModel] = useState('svm');
+  const [selectedModel, setSelectedModel] = useState('pytorch_cnn');
   const [allMetrics, setAllMetrics] = useState({});
   
   const models = [
     { id: 'knn', name: 'KNN Baseline' },
-    { id: 'svm', name: 'SVM Baseline' }
+    { id: 'svm', name: 'SVM Baseline' },
+    { id: 'pytorch_cnn', name: 'PyTorch CNN' },
+    { id: 'tensorflow_mobilenet', name: 'TensorFlow MobileNetV2' }
   ];
 
   useEffect(() => {
