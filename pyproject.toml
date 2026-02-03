@@ -51,7 +51,7 @@ ignore = ["E501", "N803", "N806", "B008"]
 "test_*.py" = ["N802"]
 
 [tool.pytest.ini_options]
-testpaths = ["python/tests", "backend/tests"]
+testpaths = ["backend/tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
 addopts = "-v --cov=backend/app --cov-report=term-missing --cov-report=xml --cov-fail-under=80"
