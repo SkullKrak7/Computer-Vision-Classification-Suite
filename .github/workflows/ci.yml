@@ -138,7 +138,13 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++ libopencv-dev
+          sudo apt-get install -y cmake g++ libopencv-dev wget
+          # Install ONNX Runtime
+          wget https://github.com/microsoft/onnxruntime/releases/download/v1.23.2/onnxruntime-linux-x64-1.23.2.tgz
+          tar -xzf onnxruntime-linux-x64-1.23.2.tgz
+          sudo cp -r onnxruntime-linux-x64-1.23.2/include/* /usr/local/include/
+          sudo cp -r onnxruntime-linux-x64-1.23.2/lib/* /usr/local/lib/
+          sudo ldconfig
 
       - name: Build C++ project
         run: |
