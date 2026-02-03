@@ -44,10 +44,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routes
-app.include_router(inference.router, prefix="/api/inference", tags=["inference"])
-app.include_router(training.router, prefix="/api/training", tags=["training"])
-app.include_router(metrics.router, prefix="/api/metrics", tags=["metrics"])
+# Routes with versioning
+app.include_router(inference.router, prefix="/v1/inference", tags=["inference"])
+app.include_router(training.router, prefix="/v1/training", tags=["training"])
+app.include_router(metrics.router, prefix="/v1/metrics", tags=["metrics"])
 
 
 # Global exception handlers
