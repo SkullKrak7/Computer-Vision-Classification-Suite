@@ -91,14 +91,15 @@ async def predict(file: UploadFile = File(...)):
     start = time.time()
     logger.info(f"Prediction request for file: {file.filename}")
 
-    if load_model() is None:
-        logger.error("Model not loaded")
-        raise HTTPException(status_code=503, detail="Model not loaded")
-
     try:
-        # Validate image upload (security checks)
+        # Validate image upload first (security checks)
         image, _ = await validate_image_upload(file)
         logger.debug(f"Image validated: {image.size}")
+
+        # Check model after validation
+        if load_model() is None:
+            logger.error("Model not loaded")
+            raise HTTPException(status_code=503, detail="Model not loaded")
 
         # Preprocess image (model trained on 64x64)
         image = image.resize((64, 64))

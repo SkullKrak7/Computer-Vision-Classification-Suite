@@ -29,12 +29,5 @@ def sample_image_bytes():
 @pytest.fixture
 def large_image_bytes():
     """Generate image exceeding size limit (>10MB)"""
-    from io import BytesIO
-
-    from PIL import Image
-
-    img = Image.new("RGB", (5000, 5000), color="blue")
-    buf = BytesIO()
-    img.save(buf, format="JPEG", quality=100)
-    buf.seek(0)
-    return buf.getvalue()
+    # Create 11MB of random data to exceed 10MB limit
+    return b"fake_image_data" * (1024 * 1024)  # 15MB of data

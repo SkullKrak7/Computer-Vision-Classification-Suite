@@ -37,6 +37,7 @@ kaggle==1.8.3
 # Development Tools
 pytest==9.0.2
 pytest-cov==7.0.0
+pytest-asyncio==0.25.2
 black==26.1.0
 ruff==0.14.14
 pre-commit==4.5.1
