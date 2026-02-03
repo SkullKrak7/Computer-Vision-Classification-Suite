@@ -28,6 +28,7 @@ pydantic-settings==2.8.2
 prometheus-client==0.22.1
 alembic==1.15.3
 sqlalchemy==2.0.40
+locust==2.33.2
 
 # Utilities
 pyyaml==6.0.3
