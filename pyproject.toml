@@ -55,3 +55,8 @@ testpaths = ["python/tests", "backend/tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
 addopts = "-v --cov=python --cov=backend --cov-report=term-missing --cov-report=xml"
+
+
+[tool.bandit]
+exclude_dirs = ["tests", "venv", ".venv", "untracked"]
+skips = ["B101", "B403", "B301", "B614"]  # Allow assert in tests, pickle/torch.load for ML models
