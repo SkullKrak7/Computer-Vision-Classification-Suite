@@ -12,7 +12,7 @@ class ModelLoader:
         if model_path in self.models:
             return self.models[model_path]
 
-        # TODO: Implement actual loading
+        # Model loading handled in routes/inference.py
         self.models[model_path] = None
         return None
 
