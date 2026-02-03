@@ -1,0 +1,30 @@
+# Code owners for CV Classification Suite
+# These owners will be requested for review when someone opens a pull request
+
+# Global owner
+* @SkullKrak7
+
+# Python ML code
+/python/src/ @SkullKrak7
+/python/tests/ @SkullKrak7
+
+# Backend API
+/backend/ @SkullKrak7
+
+# C++ inference engine
+/cpp/ @SkullKrak7
+
+# Infrastructure
+/docker/ @SkullKrak7
+/.github/ @SkullKrak7
+/k8s/ @SkullKrak7
+
+# Configuration files
+*.yml @SkullKrak7
+*.yaml @SkullKrak7
+*.toml @SkullKrak7
+requirements.txt @SkullKrak7
+
+# Security-sensitive files
+.pre-commit-config.yaml @SkullKrak7
+.github/workflows/ @SkullKrak7
