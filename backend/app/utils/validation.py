@@ -64,7 +64,7 @@ async def validate_image_upload(file: UploadFile) -> tuple[Image.Image, str]:
         image = Image.open(io.BytesIO(contents))
 
         # Verify image format matches extension
-        if image.format.lower() not in {"jpeg", "jpg", "png"}:
+        if image.format and image.format.lower() not in {"jpeg", "jpg", "png"}:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid image format: {image.format}")
 
         # Validate image dimensions (prevent decompression bombs)

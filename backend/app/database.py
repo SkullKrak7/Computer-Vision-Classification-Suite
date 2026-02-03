@@ -1,10 +1,12 @@
 """Database models"""
 
-from sqlalchemy import Column, DateTime, Float, Integer, String, Text
+from typing import Any
+
+from sqlalchemy import Column, DateTime, Float, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
 
-Base = declarative_base()
+Base: Any = declarative_base()
 
 
 class PredictionLog(Base):

@@ -7,7 +7,7 @@ import numpy as np
 import torch
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
-from ..models import InferenceResponse
+from ..models import InferenceResponse, PredictionResponse
 from ..utils.logging import get_logger
 from ..utils.metrics import inference_count, inference_duration
 from ..utils.validation import validate_image_upload
@@ -108,23 +108,26 @@ async def predict(file: UploadFile = File(...)):
 
         # Inference
         with torch.no_grad():
-            outputs = model(img_tensor)
-            probs = torch.softmax(outputs, dim=1)[0]
-            top3 = torch.topk(probs, min(3, len(probs)))
+            if model is not None:
+                outputs = model(img_tensor)
+                probs = torch.softmax(outputs, dim=1)[0]
+                top3 = torch.topk(probs, min(3, len(probs)))
+            else:
+                raise HTTPException(status_code=503, detail="Model not loaded")
 
         # Map class indices to names
         class_names = ["buildings", "forest", "glacier", "mountain", "sea", "street"]
         predictions = [
-            {
-                "class_id": idx.item(),
-                "class_name": class_names[idx.item()] if idx.item() < len(class_names) else f"class_{idx.item()}",
-                "confidence": prob.item(),
-            }
+            PredictionResponse(
+                class_id=idx.item(),
+                class_name=class_names[idx.item()] if idx.item() < len(class_names) else f"class_{idx.item()}",
+                confidence=prob.item(),
+            )
             for prob, idx in zip(top3.values, top3.indices, strict=False)
         ]
 
         inference_time = time.time() - start
-        logger.info(f"Prediction complete in {inference_time:.3f}s: {predictions[0]['class_name']}")
+        logger.info(f"Prediction complete in {inference_time:.3f}s: {predictions[0].class_name}")
 
         # Record metrics
         inference_count.labels(status="success").inc()

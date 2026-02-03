@@ -81,6 +81,6 @@ def health():
 
 
 @app.get("/metrics")
-def metrics():
+def get_metrics():
     """Prometheus metrics endpoint"""
     return metrics_endpoint()

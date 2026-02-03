@@ -117,9 +117,9 @@ jobs:
 
       - name: Run backend tests
         run: |
-          pytest backend/tests/ -v --cov=backend/app --cov-report=xml --cov-report=term-missing
+          pytest backend/tests/ -v --cov=backend/app --cov-report=xml --cov-report=term-missing --cov-fail-under=50
         env:
-          PYTHONPATH: ${{ github.workspace }}/backend
+          PYTHONPATH: ${{ github.workspace }}
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
