@@ -191,7 +191,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./docker/Dockerfile
+          file: ./docker/Dockerfile.python
           push: false
           tags: cv-suite:test
           cache-from: type=gha
