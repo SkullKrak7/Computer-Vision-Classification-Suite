@@ -26,7 +26,7 @@ python-multipart==0.0.22
 pydantic==2.12.5
 pydantic-settings==2.12.0
 prometheus-client==0.24.1
-alembic==1.15.3
+alembic==1.18.3
 sqlalchemy==2.0.40
 locust==2.43.2
 
