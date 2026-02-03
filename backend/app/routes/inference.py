@@ -8,9 +8,11 @@ import torch
 from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from ..models import InferenceResponse
+from ..utils.logging import get_logger
 from ..utils.validation import validate_image_upload
 
 router = APIRouter()
+logger = get_logger(__name__)
 
 # Load PyTorch model (best performing)
 model = None
@@ -23,8 +25,10 @@ def load_model():
         try:
             model_path = Path("models/pytorch_cnn_tuned.pth")
             if not model_path.exists():
+                logger.warning(f"Model not found at {model_path}")
                 return None
 
+            logger.info(f"Loading model from {model_path}")
             checkpoint = torch.load(model_path, map_location="cpu")
 
             # Handle checkpoint format - could be dict or OrderedDict
@@ -73,11 +77,9 @@ def load_model():
             model = SimpleCNN(num_classes=len(label_map))
             model.load_state_dict(state_dict)
             model.eval()
+            logger.info("Model loaded successfully")
         except Exception as e:
-            print(f"Model load error: {e}")
-            import traceback
-
-            traceback.print_exc()
+            logger.error(f"Model load error: {e}", exc_info=True)
             return None
     return model
 
@@ -86,13 +88,16 @@ def load_model():
 async def predict(file: UploadFile = File(...)):
     """Run inference on uploaded image"""
     start = time.time()
+    logger.info(f"Prediction request for file: {file.filename}")
 
     if load_model() is None:
+        logger.error("Model not loaded")
         raise HTTPException(status_code=503, detail="Model not loaded")
 
     try:
         # Validate image upload (security checks)
         image, _ = await validate_image_upload(file)
+        logger.debug(f"Image validated: {image.size}")
 
         # Preprocess image (model trained on 64x64)
         image = image.resize((64, 64))
@@ -116,6 +121,11 @@ async def predict(file: UploadFile = File(...)):
             for prob, idx in zip(top3.values, top3.indices, strict=False)
         ]
 
-        return InferenceResponse(predictions=predictions, inference_time=time.time() - start)
+        inference_time = time.time() - start
+        logger.info(f"Prediction complete in {inference_time:.3f}s: {predictions[0]['class_name']}")
+        return InferenceResponse(predictions=predictions, inference_time=inference_time)
+    except HTTPException:
+        raise
     except Exception as e:
+        logger.error(f"Prediction error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e)) from e
