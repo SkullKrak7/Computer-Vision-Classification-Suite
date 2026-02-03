@@ -16,10 +16,14 @@
 - [Quick Start](#quick-start)
 - [Performance](#performance)
 - [GPU Optimization](#gpu-optimization)
+- [Testing & Quality](#testing--quality)
 - [CI/CD Pipeline](#cicd-pipeline)
-- [Testing](#testing)
+- [Monitoring & Observability](#monitoring--observability)
+- [Security](#security)
 - [API Documentation](#api-documentation)
 - [Deployment](#deployment)
+- [Troubleshooting](#troubleshooting)
+- [Production Considerations](#production-considerations)
 - [Project Status](#project-status)
 
 ## Features
@@ -284,6 +288,58 @@ print(f"GPU Memory: {torch.cuda.memory_allocated()/1e9:.2f} GB")
 | PyTorch     | 32-64     | Enabled         | 2-4     |
 | TensorFlow  | 16-32     | Enabled         | N/A     |
 
+## Testing & Quality
+
+### Test Coverage: 93%
+
+```bash
+# Run all tests
+make test
+
+# Backend tests (51 tests)
+pytest backend/tests/ -v --cov=backend/app
+
+# C++ tests
+cd cpp/build && ctest
+```
+
+### Test Suite
+
+**Backend Tests** (51 tests, 93% coverage):
+- `test_models.py` - Pydantic model validation (7 tests)
+- `test_validation_async.py` - Async file upload validation (5 tests)
+- `test_inference.py` - Inference endpoint tests (8 tests)
+- `test_integration.py` - End-to-end workflows (10 tests)
+- `test_error_handling.py` - Error scenarios (11 tests)
+- `test_database.py` - Database models (4 tests)
+- `test_metrics.py` - Metrics routes (3 tests)
+- `test_training.py` - Training routes (4 tests)
+
+**Key Testing Features**:
+- Async testing with pytest-asyncio
+- MockUploadFile for file upload simulation
+- Integration tests for full workflows
+- Error handling validation
+- Database migration testing
+
+### Code Quality Tools
+
+- **Black**: Code formatting (line-length: 120)
+- **isort**: Import sorting
+- **Ruff**: Fast linting (E, F, N, W, UP, B, C4)
+- **mypy**: Type checking with strict mode
+- **Bandit**: Security vulnerability scanning
+
+```bash
+# Run all quality checks
+make ci
+
+# Individual checks
+make format      # Format with black + isort
+make lint        # Check with ruff
+make type-check  # Run mypy
+```
+
 ## CI/CD Pipeline
 
 ![CI](https://github.com/SkullKrak7/Computer-Vision-Classification-Suite/workflows/CI/badge.svg)
@@ -322,20 +378,99 @@ All tool settings in `pyproject.toml`:
 - Ruff linting rules
 - Pytest configuration
 
-## Testing
+## Monitoring & Observability
+
+### Prometheus Metrics
+
+The backend exposes Prometheus metrics at `/metrics`:
 
 ```bash
-# Run all tests with pytest
-make test
+# Inference metrics
+inference_requests_total{status="success|error"}
+inference_duration_seconds
 
-# Or run individually
-pytest python/tests/ -v
-pytest backend/tests/ -v
-
-# C++ tests
-cd cpp/build
-ctest
+# System metrics
+process_cpu_seconds_total
+process_resident_memory_bytes
 ```
+
+### Grafana Dashboards
+
+Pre-configured dashboards for:
+- Request rate and latency
+- Error rates
+- Model inference performance
+- System resource usage
+
+```bash
+# Start monitoring stack
+docker-compose up prometheus grafana alertmanager
+
+# Access dashboards
+# Grafana: http://localhost:3001 (admin/admin)
+# Prometheus: http://localhost:9090
+```
+
+### Alerting Rules
+
+Configured alerts for:
+- High error rate (>5% over 5 minutes)
+- High latency (p95 >1s)
+- Service down
+- High inference latency (>500ms)
+- High memory usage (>80%)
+
+### Structured Logging
+
+JSON-formatted logs with:
+- Timestamps (ISO 8601)
+- Log levels
+- Request IDs for tracing
+- Module/function context
+
+```python
+{
+  "timestamp": "2026-02-03T18:00:00.000Z",
+  "level": "INFO",
+  "logger": "backend.app.routes.inference",
+  "message": "Prediction complete",
+  "request_id": "abc123",
+  "inference_time": 0.045
+}
+```
+
+## Security
+
+### Automated Security Scanning
+
+**CI Pipeline**:
+- **Bandit**: Python security vulnerability scanner
+- **Trufflehog**: Secret detection in commits
+- **Safety**: Dependency vulnerability checking
+
+```bash
+# Run security scans locally
+make security
+
+# Individual scans
+bandit -r backend/ python/ -c pyproject.toml
+safety check -r requirements.txt
+```
+
+### Security Middleware
+
+- **Rate Limiting**: 100 requests/minute per IP
+- **Security Headers**: HSTS, X-Content-Type-Options, X-Frame-Options
+- **Request ID Tracking**: For distributed tracing
+- **CORS**: Configurable allowed origins
+
+### Best Practices
+
+- No hardcoded secrets (use environment variables)
+- Input validation with Pydantic
+- File upload size limits (10MB)
+- Allowed file types validation
+- SQL injection prevention (SQLAlchemy ORM)
 
 ## API Documentation
 
@@ -372,6 +507,181 @@ GET  /api/training/status/{id} # Check training status
 ```
 
 Full API docs: http://localhost:8000/docs
+
+## Troubleshooting
+
+### Common Issues
+
+**1. CUDA Out of Memory**
+```bash
+# Reduce batch size in config
+training:
+  batch_size: 16  # Instead of 32
+
+# Or disable mixed precision
+gpu:
+  mixed_precision: false
+```
+
+**2. Docker Build Slow**
+```bash
+# Use pre-built base image (future optimization)
+# Current: ~18 minutes first build, <2 minutes cached
+
+# Workaround: Build once, reuse
+docker-compose build --no-cache  # First time only
+docker-compose up                # Fast subsequent starts
+```
+
+**3. Tests Failing Locally**
+```bash
+# Ensure clean environment
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Run with proper PYTHONPATH
+PYTHONPATH=. pytest backend/tests/
+```
+
+**4. Import Errors**
+```bash
+# Add project root to PYTHONPATH
+export PYTHONPATH="${PYTHONPATH}:$(pwd)"
+
+# Or use make commands (handles this automatically)
+make test
+```
+
+**5. Port Already in Use**
+```bash
+# Check what's using port 8000
+lsof -i :8000
+
+# Kill process or change port
+uvicorn backend.app.main:app --port 8001
+```
+
+**6. Model Not Found**
+```bash
+# Ensure models are trained first
+python python/scripts/auto_tune.py
+
+# Check models directory
+ls -la models/
+```
+
+### Performance Issues
+
+**Slow Training**:
+- Enable GPU: Check `nvidia-smi`
+- Enable mixed precision: `use_amp=True` (PyTorch) or `use_mixed_precision=True` (TensorFlow)
+- Increase batch size if memory allows
+- Use data augmentation sparingly
+
+**Slow Inference**:
+- Use C++ ONNX engine instead of Python
+- Batch predictions when possible
+- Enable GPU for inference
+- Use smaller models (MobileNet vs ResNet)
+
+### Getting Help
+
+1. Check logs: `docker-compose logs backend`
+2. Enable debug logging: `LOG_LEVEL=DEBUG`
+3. Run health check: `curl http://localhost:8000/health`
+4. Check GitHub Issues: [Report a bug](https://github.com/SkullKrak7/Computer-Vision-Classification-Suite/issues)
+
+## Production Considerations
+
+### What's Production-Ready
+
+✅ **Implemented**:
+- 93% test coverage with comprehensive test suite
+- CI/CD pipeline with automated checks
+- Docker containerization
+- Monitoring stack (Prometheus + Grafana)
+- Security scanning (Bandit, Trufflehog)
+- Database migrations (Alembic)
+- Structured JSON logging
+- Rate limiting and security middleware
+- Health checks and metrics
+- Type checking with mypy
+- API documentation (OpenAPI/Swagger)
+
+### What Would Change for Real Production
+
+**Add**:
+- Managed monitoring (CloudWatch/Datadog instead of self-hosted Prometheus)
+- API Gateway for rate limiting (instead of application middleware)
+- Secrets management (AWS Secrets Manager, not .env files)
+- Horizontal scaling (multiple instances behind load balancer)
+- Caching layer (Redis for model predictions)
+- CDN for static assets
+- Database: PostgreSQL/RDS instead of SQLite
+- Model registry (MLflow/SageMaker)
+- Distributed tracing (Jaeger/X-Ray)
+
+**Optimize**:
+- Docker builds: Pre-built base image with ML dependencies
+- CI: Parallel test execution, matrix strategy
+- Dependencies: Separate dev/prod requirements
+- Database: Connection pooling, read replicas
+- Inference: Model serving with TorchServe/TensorFlow Serving
+
+**Remove**:
+- Self-hosted Grafana (use managed dashboards)
+- Docker build in CI (use separate release pipeline)
+- Local model files (use S3/model registry)
+
+### Scalability
+
+**Current Limits**:
+- Single instance (no horizontal scaling)
+- SQLite (not suitable for concurrent writes)
+- In-memory rate limiting (doesn't work across instances)
+- Local model storage (not shared across instances)
+
+**Production Architecture**:
+```
+Internet → CDN → API Gateway → Load Balancer
+                                    ↓
+                    [Backend Instance 1] [Backend Instance 2] [Backend Instance N]
+                                    ↓
+                    Redis (cache) + PostgreSQL (DB) + S3 (models)
+                                    ↓
+                    CloudWatch (monitoring) + X-Ray (tracing)
+```
+
+### Cost Optimization
+
+**Development**: ~$0/month (local + GitHub Actions free tier)
+
+**Production Estimate** (AWS):
+- EC2 (t3.medium): ~$30/month
+- RDS PostgreSQL (db.t3.micro): ~$15/month
+- S3 (models): ~$1/month
+- CloudWatch: ~$5/month
+- **Total**: ~$50/month for small-scale production
+
+**GPU Inference** (if needed):
+- EC2 g4dn.xlarge: ~$0.50/hour (~$360/month)
+- SageMaker Inference: ~$0.20/hour (~$144/month)
+
+### Deployment Checklist
+
+- [ ] Environment variables configured
+- [ ] Database migrations run
+- [ ] Models uploaded to S3/registry
+- [ ] Health checks configured
+- [ ] Monitoring dashboards set up
+- [ ] Alerts configured
+- [ ] Backup strategy defined
+- [ ] Rollback procedure tested
+- [ ] Load testing completed
+- [ ] Security audit passed
+- [ ] Documentation updated
+- [ ] On-call rotation defined
 
 ## Deployment
 
