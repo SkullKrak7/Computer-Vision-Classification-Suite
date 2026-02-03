@@ -1,825 +1,181 @@
 # Computer Vision Classification Suite
 
-**Built entirely from ground up using Kiro CLI** - A complete production-ready ML system with Python training, C++ inference, React frontend, and FastAPI backend for image classification.
+Production-ready ML system with Python training, C++ inference, React frontend, and FastAPI backend.
 
-> This entire project was developed using **Kiro CLI**, Amazon's AI-powered development assistant, demonstrating AI-assisted development capabilities for building production-grade systems.
-
-[![GPU Accelerated](https://img.shields.io/badge/GPU-RTX%203060-green)](#gpu-optimization)
+[![Tests](https://img.shields.io/badge/tests-51%20passing-success)](docs/TESTING.md)
+[![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)](docs/TESTING.md)
 [![Python](https://img.shields.io/badge/Python-3.12-blue)](python/)
 [![C++](https://img.shields.io/badge/C++-17-orange)](cpp/)
-[![React](https://img.shields.io/badge/React-18-cyan)](frontend/)
-[![Built with Kiro CLI](https://img.shields.io/badge/Built%20with-Kiro%20CLI-blueviolet)](https://aws.amazon.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-## Table of Contents
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Quick Start](#quick-start)
-- [Performance](#performance)
-- [GPU Optimization](#gpu-optimization)
-- [Testing & Quality](#testing--quality)
-- [CI/CD Pipeline](#cicd-pipeline)
-- [Monitoring & Observability](#monitoring--observability)
-- [Security](#security)
-- [API Documentation](#api-documentation)
-- [Deployment](#deployment)
-- [Troubleshooting](#troubleshooting)
-- [Production Considerations](#production-considerations)
-- [Project Status](#project-status)
+## Quick Start
+
+```bash
+# Setup
+make setup && source venv/bin/activate
+
+# Train models
+make train
+
+# Run tests (51 tests, 93% coverage)
+make test
+
+# Start all services
+docker-compose up
+```
+
+**Access**: [Frontend](http://localhost:3000) | [API](http://localhost:8000) | [Docs](http://localhost:8000/docs)
 
 ## Features
 
-### OOP Architecture
-- **BaseModel Abstract Class**: Unified interface for all models
-- **Inheritance Hierarchy**: PyTorch and TensorFlow models inherit from BaseModel
-- **Polymorphic Design**: Consistent train(), predict(), save(), load() methods
-- **Clean Structure**: 17 Python source files, no duplicates
+✅ **93% Test Coverage** - Comprehensive test suite  
+✅ **GPU Accelerated** - 15x speedup with PyTorch AMP  
+✅ **Production Ready** - Monitoring, security, CI/CD  
+✅ **Multi-Framework** - PyTorch, TensorFlow, SVM, KNN  
+✅ **C++ Inference** - 2-3x faster than Python  
+✅ **Real-time API** - FastAPI with WebSocket  
 
-### Python ML Pipeline
-- **GPU Acceleration**: 15x speedup with PyTorch AMP, 6x with TensorFlow mixed precision
-- **Multiple Frameworks**: PyTorch CNN, TensorFlow MobileNetV2, SVM, KNN
-- **Automated Tuning**: Hyperparameter optimization with bias-variance analysis
-- **Data Augmentation**: Flip, rotate, brightness adjustments
-- **ONNX Export**: Cross-platform model deployment
-- **Kaggle Integration**: Automated dataset testing
+## Performance
 
-### C++ Inference Engine
-- **High Performance**: 2-3x faster than Python (15-20ms per image)
-- **ONNX Runtime**: Cross-platform model loading
-- **OpenCV Integration**: Efficient preprocessing
-- **Minimal Dependencies**: Production-ready
+| Model | Accuracy | Speed |
+|-------|----------|-------|
+| TensorFlow MobileNetV2 | 88.92% | 25 img/s |
+| PyTorch CNN | 87.28% | 70 img/s |
+| C++ ONNX | - | 50-65 img/s |
 
-### React Frontend
-- **Live Inference**: Real-time image classification
-- **Training Monitor**: Progress tracking with live updates
-- **Metrics Visualization**: Interactive charts
-- **Model Comparison**: Side-by-side analysis
-- **Dataset Statistics**: Distribution visualization
+## Documentation
 
-### FastAPI Backend
-- **REST API**: Inference, training, metrics endpoints
-- **Dynamic Metrics**: Loads latest results from JSON files
-- **WebSocket Support**: Real-time updates
-- **Auto Documentation**: Swagger UI at `/docs`
+📖 [Testing Guide](docs/TESTING.md) - 51 tests, 93% coverage  
+📊 [Monitoring](docs/MONITORING.md) - Prometheus, Grafana, alerts  
+🔒 [Security](docs/SECURITY.md) - Scanning, best practices  
+🔧 [Troubleshooting](docs/TROUBLESHOOTING.md) - Common issues  
+🚀 [Deployment](docs/DEPLOYMENT.md) - Production guide  
+📝 [Changelog](CHANGELOG.md) - Release history  
 
 ## Project Structure
 
 ```
-Computer-Vision-Classification-Suite/
-├── python/              # ML training pipeline
-│   ├── src/            # 17 core modules (OOP design)
-│   │   ├── data/       # Dataset loading & augmentation
-│   │   ├── models/     # BaseModel + PyTorch/TF/Baseline
-│   │   ├── training/   # Training utilities
-│   │   ├── evaluation/ # Metrics & benchmarking
-│   │   └── export/     # ONNX export
-│   ├── scripts/        # Training scripts
-│   │   ├── auto_tune.py
-│   │   ├── train_cnn.py
-│   │   ├── train_baseline.py
-│   │   ├── tune_baseline.py
-│   │   └── benchmark_all.py
-│   └── tests/          # Unit tests
-├── cpp/                # C++ inference engine
-│   ├── include/        # Headers
-│   ├── src/            # Implementation
-│   └── tests/          # C++ tests
-├── frontend/           # React web interface
-│   └── src/
-│       ├── components/ # UI components
-│       └── services/   # API & WebSocket
-├── backend/            # FastAPI server
-│   └── app/
-│       ├── routes/     # API endpoints (dynamic metrics)
-│       └── utils/      # Utilities
-├── configs/            # YAML configurations
-├── models/             # Trained models + metrics JSON
-├── datasets/           # Training data
-└── docs/               # Documentation
+├── python/         # ML training (17 modules, OOP design)
+├── cpp/            # C++ inference engine (ONNX Runtime)
+├── frontend/       # React UI with live inference
+├── backend/        # FastAPI server (51 tests, 93% coverage)
+├── docs/           # Comprehensive documentation
+├── monitoring/     # Prometheus + Grafana + Alertmanager
+└── tests/          # Test suite with CI/CD
 ```
 
-## Quick Start
+## Installation
 
-### Option 1: Using Make (Recommended)
-
+### Docker (Recommended)
 ```bash
-# Setup environment
-make setup
-source venv/bin/activate
-
-# Train all models
-make train
-
-# Run tests
-make test
-
-# Benchmark
-make benchmark
-```
-
-### Option 2: Docker
-
-```bash
-# Start all services
 docker-compose up --build
-
-# Access services
-# Frontend: http://localhost:3000
-# Backend API: http://localhost:8000
-# API Docs: http://localhost:8000/docs
 ```
 
-### Option 3: Manual Setup
-
-#### Python Training
-
+### Manual Setup
 ```bash
-# Setup
+# Python environment
 python -m venv venv
 source venv/bin/activate
-pip install -r python/requirements.txt
+pip install -r requirements.txt
 
-# Train deep learning models with auto-tuning
+# Train models
 python python/scripts/auto_tune.py
 
-# Train baseline models with tuning
-python python/scripts/tune_baseline.py
+# Start backend
+uvicorn backend.app.main:app --reload
 
-# Export to ONNX
-bash scripts/export_onnx.sh models/pytorch/best_model.pth
+# Start frontend (new terminal)
+cd frontend && npm install && npm run dev
 ```
 
-#### C++ Inference
-
+### C++ Inference
 ```bash
-cd cpp
-mkdir build && cd build
-cmake ..
-make -j$(nproc)
-
-# Run inference
+cd cpp && mkdir build && cd build
+cmake .. && make -j$(nproc)
 ./cv_inference ../models/onnx/model.onnx image.jpg
 ```
 
-#### Frontend & Backend
+## Usage
 
-```bash
-# Backend (from project root)
-uvicorn backend.app.main:app --reload
-
-# Frontend (new terminal)
-cd frontend
-npm install
-npm run dev
-```
-
-## Performance
-
-### GPU Acceleration (RTX 3060 12GB)
-
-| Framework   | Training (100 samples) | Inference | GPU Memory | Speedup |
-|-------------|------------------------|-----------|------------|---------|
-| PyTorch     | ~8s                    | 70 img/s  | ~1.66 GB   | 15x     |
-| TensorFlow  | ~30s                   | 25 img/s  | Dynamic    | 6x      |
-
-### C++ vs Python Inference
-
-| Implementation | Speed per Image | Throughput |
-|----------------|-----------------|------------|
-| Python PyTorch | ~14ms           | 70 img/s   |
-| Python TF      | ~40ms           | 25 img/s   |
-| C++ ONNX       | ~15-20ms        | 50-65 img/s|
-
-### Model Performance (Intel Images Dataset - 6 Classes)
-
-**All Models Trained & Integrated:**
-
-| Model                      | Accuracy | Precision | Recall | F1 Score |
-|----------------------------|----------|-----------|--------|----------|
-| TensorFlow MobileNetV2     | 88.92%   | 89.01%    | 88.92% | 88.83%   |
-| PyTorch CNN                | 87.28%   | 87.38%    | 87.28% | 87.24%   |
-| SVM (RBF, C=10.0)          | 64.80%   | 64.77%    | 64.80% | 64.74%   |
-| KNN (k=9)                  | 40.51%   | 52.03%    | 40.51% | 36.51%   | 
-
-**Model Details:**
-
-- **TensorFlow MobileNetV2** (Best Overall)
-  - Transfer learning with ImageNet pretrained weights
-  - Training: 6 epochs with early stopping
-  - Image size: 96x96, Batch size: 16
-  - Model size: 9.3 MB
-  - **Recommended for production deployment**
-
-- **PyTorch CNN** (Strong Custom Architecture)
-  - Custom 3-layer CNN with BatchNorm and Dropout
-  - Training: 23 epochs with early stopping
-  - Image size: 64x64, Batch size: 32
-  - Model size: 8.4 MB
-  - Techniques: Data augmentation, class weights, LR scheduling
-
-- **SVM** (Best Baseline)
-  - Tuned with kernels ['linear', 'rbf'] and C values [0.1, 1.0, 10.0]
-  - Best: RBF kernel with C=10.0
-  - Training time: ~5 minutes on 14,034 samples
-  - Model size: 904 MB
-
-- **KNN** (Reference Baseline)
-  - Tuned with k values [1, 3, 5, 7, 9]
-  - Best: k=9 neighbors
-  - Training time: ~2 minutes
-  - Model size: 527 MB
-
-**Key Insights:**
-- Deep learning models outperform baselines by 23-24%
-- Transfer learning (MobileNetV2) achieved best results
-- All models trained with proper hyperparameter tuning, early stopping, and data augmentation
-- Total training time: ~30 minutes on RTX 3060 12GB
-
-## GPU Optimization
-
-### Hardware Configuration
-- **GPU**: NVIDIA GeForce RTX 3060 12GB
-- **CUDA**: 13.0 (Driver)
-- **Compute Capability**: 8.6
-
-### PyTorch Optimizations
+### Training
 ```python
-from models.deep_learning import PyTorchCNNClassifier
+from src.models.deep_learning import PyTorchCNNClassifier
 
-# Automatic Mixed Precision (AMP) enabled by default
-model = PyTorchCNNClassifier(num_classes=10, use_amp=True)
-model.train(X_train, y_train, label_map, epochs=20, batch_size=32)
+model = PyTorchCNNClassifier(num_classes=6, use_amp=True)
+model.train(X_train, y_train, label_map, epochs=20)
+model.save("models/pytorch/model.pth")
 ```
 
-**Features:**
-- Float16 mixed precision (2x speedup)
-- cuDNN benchmark mode (10-20% faster)
-- Pin memory for faster CPU-GPU transfer
-- Gradient scaling for numerical stability
-
-### TensorFlow Optimizations
-```python
-from models.deep_learning import TFMobileNetClassifier
-
-# Mixed precision enabled
-model = TFMobileNetClassifier(num_classes=10, use_mixed_precision=True)
-model.train(X_train, y_train, label_map, epochs=20, batch_size=32)
-```
-
-**Features:**
-- Mixed float16 policy
-- XLA (Accelerated Linear Algebra)
-- Dynamic memory growth
-- Batched inference
-
-### Monitoring GPU
+### Inference API
 ```bash
-# Real-time monitoring
-watch -n 1 nvidia-smi
-
-# Python monitoring
-import torch
-print(f"GPU Memory: {torch.cuda.memory_allocated()/1e9:.2f} GB")
+curl -X POST http://localhost:8000/v1/inference/predict \
+  -F "file=@image.jpg"
 ```
 
-### Recommended Settings
-
-| Framework   | Batch Size | Mixed Precision | Workers |
-|-------------|-----------|-----------------|---------|
-| PyTorch     | 32-64     | Enabled         | 2-4     |
-| TensorFlow  | 16-32     | Enabled         | N/A     |
-
-## Testing & Quality
-
-### Test Coverage: 93%
-
-```bash
-# Run all tests
-make test
-
-# Backend tests (51 tests)
-pytest backend/tests/ -v --cov=backend/app
-
-# C++ tests
-cd cpp/build && ctest
-```
-
-### Test Suite
-
-**Backend Tests** (51 tests, 93% coverage):
-- `test_models.py` - Pydantic model validation (7 tests)
-- `test_validation_async.py` - Async file upload validation (5 tests)
-- `test_inference.py` - Inference endpoint tests (8 tests)
-- `test_integration.py` - End-to-end workflows (10 tests)
-- `test_error_handling.py` - Error scenarios (11 tests)
-- `test_database.py` - Database models (4 tests)
-- `test_metrics.py` - Metrics routes (3 tests)
-- `test_training.py` - Training routes (4 tests)
-
-**Key Testing Features**:
-- Async testing with pytest-asyncio
-- MockUploadFile for file upload simulation
-- Integration tests for full workflows
-- Error handling validation
-- Database migration testing
-
-### Code Quality Tools
-
-- **Black**: Code formatting (line-length: 120)
-- **isort**: Import sorting
-- **Ruff**: Fast linting (E, F, N, W, UP, B, C4)
-- **mypy**: Type checking with strict mode
-- **Bandit**: Security vulnerability scanning
-
-```bash
-# Run all quality checks
-make ci
-
-# Individual checks
-make format      # Format with black + isort
-make lint        # Check with ruff
-make type-check  # Run mypy
-```
-
-## CI/CD Pipeline
-
-![CI](https://github.com/SkullKrak7/Computer-Vision-Classification-Suite/workflows/CI/badge.svg)
-![Docker](https://github.com/SkullKrak7/Computer-Vision-Classification-Suite/workflows/Docker%20Build/badge.svg)
-
-### Automated Workflows
-
-**GitHub Actions** runs on every push and pull request:
-
-- **Linting & Formatting**: Black (code formatting) + Ruff (fast linting)
-- **Testing**: Pytest with coverage reporting
-- **Docker Builds**: Automated container builds for backend, frontend, and Python services
-
-### Local Development Commands
-
-```bash
-make format    # Format code with Black
-make lint      # Check code with Ruff
-make lint-fix  # Auto-fix linting issues
-make test      # Run pytest with coverage
-make ci        # Run all CI checks locally
-```
-
-### Tools
-
-- **Black**: Code formatting (line-length: 100)
-- **Ruff**: Fast Python linting (E, F, I, N, W, UP, B, C4)
-- **Pytest**: Testing with coverage
-- **Pydantic**: Data validation in FastAPI
-- **Pre-commit**: Git hooks for automated checks
-
-### Configuration
-
-All tool settings in `pyproject.toml`:
-- Black formatting rules
-- Ruff linting rules
-- Pytest configuration
-
-## Monitoring & Observability
-
-### Prometheus Metrics
-
-The backend exposes Prometheus metrics at `/metrics`:
-
-```bash
-# Inference metrics
-inference_requests_total{status="success|error"}
-inference_duration_seconds
-
-# System metrics
-process_cpu_seconds_total
-process_resident_memory_bytes
-```
-
-### Grafana Dashboards
-
-Pre-configured dashboards for:
-- Request rate and latency
-- Error rates
-- Model inference performance
-- System resource usage
-
+### Monitoring
 ```bash
 # Start monitoring stack
-docker-compose up prometheus grafana alertmanager
+docker-compose up prometheus grafana
 
 # Access dashboards
 # Grafana: http://localhost:3001 (admin/admin)
 # Prometheus: http://localhost:9090
 ```
 
-### Alerting Rules
-
-Configured alerts for:
-- High error rate (>5% over 5 minutes)
-- High latency (p95 >1s)
-- Service down
-- High inference latency (>500ms)
-- High memory usage (>80%)
-
-### Structured Logging
-
-JSON-formatted logs with:
-- Timestamps (ISO 8601)
-- Log levels
-- Request IDs for tracing
-- Module/function context
-
-```python
-{
-  "timestamp": "2026-02-03T18:00:00.000Z",
-  "level": "INFO",
-  "logger": "backend.app.routes.inference",
-  "message": "Prediction complete",
-  "request_id": "abc123",
-  "inference_time": 0.045
-}
-```
-
-## Security
-
-### Automated Security Scanning
-
-**CI Pipeline**:
-- **Bandit**: Python security vulnerability scanner
-- **Trufflehog**: Secret detection in commits
-- **Safety**: Dependency vulnerability checking
-
-```bash
-# Run security scans locally
-make security
-
-# Individual scans
-bandit -r backend/ python/ -c pyproject.toml
-safety check -r requirements.txt
-```
-
-### Security Middleware
-
-- **Rate Limiting**: 100 requests/minute per IP
-- **Security Headers**: HSTS, X-Content-Type-Options, X-Frame-Options
-- **Request ID Tracking**: For distributed tracing
-- **CORS**: Configurable allowed origins
-
-### Best Practices
-
-- No hardcoded secrets (use environment variables)
-- Input validation with Pydantic
-- File upload size limits (10MB)
-- Allowed file types validation
-- SQL injection prevention (SQLAlchemy ORM)
-
 ## API Documentation
 
-### Metrics Endpoint (Dynamic Loading)
+Interactive API docs: http://localhost:8000/docs
 
-The API dynamically loads the latest metrics from JSON files saved during training:
+**Endpoints**:
+- `POST /v1/inference/predict` - Image classification
+- `GET /v1/metrics/model/{id}` - Model metrics
+- `POST /v1/training/start` - Start training job
+- `GET /v1/training/status/{id}` - Training status
+- `GET /health` - Health check
+- `GET /metrics` - Prometheus metrics
 
-```bash
-GET /api/metrics/model/{model_id}
-```
-
-**Supported Models:**
-- `knn` → `models/knn_metadata.json`
-- `svm` → `models/svm_metadata.json`
-- `pytorch_cnn` → `models/pytorch_cnn_tuned_metadata.json`
-- `tensorflow_mobilenet` → `models/tensorflow_mobilenet_tuned_metadata.json`
-
-**Response:**
-```json
-{
-  "accuracy": 0.80,
-  "precision": 0.79,
-  "recall": 0.78,
-  "f1_score": 0.785
-}
-```
-
-### Other Endpoints
+## Testing
 
 ```bash
-POST /api/inference/predict    # Image classification
-POST /api/training/start       # Start training job
-GET  /api/training/status/{id} # Check training status
-```
-
-Full API docs: http://localhost:8000/docs
-
-## Troubleshooting
-
-### Common Issues
-
-**1. CUDA Out of Memory**
-```bash
-# Reduce batch size in config
-training:
-  batch_size: 16  # Instead of 32
-
-# Or disable mixed precision
-gpu:
-  mixed_precision: false
-```
-
-**2. Docker Build Slow**
-```bash
-# Use pre-built base image (future optimization)
-# Current: ~18 minutes first build, <2 minutes cached
-
-# Workaround: Build once, reuse
-docker-compose build --no-cache  # First time only
-docker-compose up                # Fast subsequent starts
-```
-
-**3. Tests Failing Locally**
-```bash
-# Ensure clean environment
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# Run with proper PYTHONPATH
-PYTHONPATH=. pytest backend/tests/
-```
-
-**4. Import Errors**
-```bash
-# Add project root to PYTHONPATH
-export PYTHONPATH="${PYTHONPATH}:$(pwd)"
-
-# Or use make commands (handles this automatically)
+# All tests
 make test
+
+# Specific tests
+pytest backend/tests/test_inference.py -v
+
+# With coverage
+pytest backend/tests/ --cov=backend/app --cov-report=term-missing
+
+# C++ tests
+cd cpp/build && ctest
 ```
 
-**5. Port Already in Use**
-```bash
-# Check what's using port 8000
-lsof -i :8000
-
-# Kill process or change port
-uvicorn backend.app.main:app --port 8001
-```
-
-**6. Model Not Found**
-```bash
-# Ensure models are trained first
-python python/scripts/auto_tune.py
-
-# Check models directory
-ls -la models/
-```
-
-### Performance Issues
-
-**Slow Training**:
-- Enable GPU: Check `nvidia-smi`
-- Enable mixed precision: `use_amp=True` (PyTorch) or `use_mixed_precision=True` (TensorFlow)
-- Increase batch size if memory allows
-- Use data augmentation sparingly
-
-**Slow Inference**:
-- Use C++ ONNX engine instead of Python
-- Batch predictions when possible
-- Enable GPU for inference
-- Use smaller models (MobileNet vs ResNet)
-
-### Getting Help
-
-1. Check logs: `docker-compose logs backend`
-2. Enable debug logging: `LOG_LEVEL=DEBUG`
-3. Run health check: `curl http://localhost:8000/health`
-4. Check GitHub Issues: [Report a bug](https://github.com/SkullKrak7/Computer-Vision-Classification-Suite/issues)
-
-## Production Considerations
-
-### What's Production-Ready
-
-✅ **Implemented**:
-- 93% test coverage with comprehensive test suite
-- CI/CD pipeline with automated checks
-- Docker containerization
-- Monitoring stack (Prometheus + Grafana)
-- Security scanning (Bandit, Trufflehog)
-- Database migrations (Alembic)
-- Structured JSON logging
-- Rate limiting and security middleware
-- Health checks and metrics
-- Type checking with mypy
-- API documentation (OpenAPI/Swagger)
-
-### What Would Change for Real Production
-
-**Add**:
-- Managed monitoring (CloudWatch/Datadog instead of self-hosted Prometheus)
-- API Gateway for rate limiting (instead of application middleware)
-- Secrets management (AWS Secrets Manager, not .env files)
-- Horizontal scaling (multiple instances behind load balancer)
-- Caching layer (Redis for model predictions)
-- CDN for static assets
-- Database: PostgreSQL/RDS instead of SQLite
-- Model registry (MLflow/SageMaker)
-- Distributed tracing (Jaeger/X-Ray)
-
-**Optimize**:
-- Docker builds: Pre-built base image with ML dependencies
-- CI: Parallel test execution, matrix strategy
-- Dependencies: Separate dev/prod requirements
-- Database: Connection pooling, read replicas
-- Inference: Model serving with TorchServe/TensorFlow Serving
-
-**Remove**:
-- Self-hosted Grafana (use managed dashboards)
-- Docker build in CI (use separate release pipeline)
-- Local model files (use S3/model registry)
-
-### Scalability
-
-**Current Limits**:
-- Single instance (no horizontal scaling)
-- SQLite (not suitable for concurrent writes)
-- In-memory rate limiting (doesn't work across instances)
-- Local model storage (not shared across instances)
-
-**Production Architecture**:
-```
-Internet → CDN → API Gateway → Load Balancer
-                                    ↓
-                    [Backend Instance 1] [Backend Instance 2] [Backend Instance N]
-                                    ↓
-                    Redis (cache) + PostgreSQL (DB) + S3 (models)
-                                    ↓
-                    CloudWatch (monitoring) + X-Ray (tracing)
-```
-
-### Cost Optimization
-
-**Development**: ~$0/month (local + GitHub Actions free tier)
-
-**Production Estimate** (AWS):
-- EC2 (t3.medium): ~$30/month
-- RDS PostgreSQL (db.t3.micro): ~$15/month
-- S3 (models): ~$1/month
-- CloudWatch: ~$5/month
-- **Total**: ~$50/month for small-scale production
-
-**GPU Inference** (if needed):
-- EC2 g4dn.xlarge: ~$0.50/hour (~$360/month)
-- SageMaker Inference: ~$0.20/hour (~$144/month)
-
-### Deployment Checklist
-
-- [ ] Environment variables configured
-- [ ] Database migrations run
-- [ ] Models uploaded to S3/registry
-- [ ] Health checks configured
-- [ ] Monitoring dashboards set up
-- [ ] Alerts configured
-- [ ] Backup strategy defined
-- [ ] Rollback procedure tested
-- [ ] Load testing completed
-- [ ] Security audit passed
-- [ ] Documentation updated
-- [ ] On-call rotation defined
-
-## Deployment
-
-### Docker Compose
-```bash
-docker-compose up --build
-```
-
-Services:
-- **Frontend**: http://localhost:3000
-- **Backend**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
-
-### Production Checklist
-- [x] Docker containerization
-- [x] CI/CD pipeline with GitHub Actions
-- [x] Environment variables
-- [x] Health checks
-- [x] Auto-generated API docs
-- [x] Comprehensive tests
-- [x] GPU optimization
-- [x] Dynamic metrics loading
-
-## Configuration
-
-### Training Config (`configs/training/deep_learning.yaml`)
-```yaml
-model:
-  framework: pytorch
-  architecture: cnn
-
-training:
-  epochs: 20
-  batch_size: 32
-  learning_rate: 0.001
-
-gpu:
-  enabled: true
-  mixed_precision: true
-```
-
-### Inference Config (`configs/inference/config.yaml`)
-```yaml
-inference:
-  model_path: models/pytorch/best_model.pth
-  batch_size: 32
-
-gpu:
-  enabled: true
-```
-
-## Example Usage
-
-### Python Training with Auto-Tuning
-```python
-from src.training.model_tuner import ModelTuner
-from src.models.deep_learning import PyTorchCNNClassifier
-
-# Automated hyperparameter tuning
-tuner = ModelTuner(PyTorchCNNClassifier, num_classes=6)
-best_model, best_params = tuner.tune(
-    X_train, y_train, X_val, y_val, label_map
-)
-```
-
-### C++ Inference
-```cpp
-#include "inference_engine.hpp"
-
-InferenceEngine engine("model.onnx");
-cv::Mat image = cv::imread("test.jpg");
-auto prediction = engine.predict(image);
-```
-
-### Frontend API Call
-```javascript
-import { api } from './services/api';
-
-// Get latest metrics
-const metrics = await api.getMetrics('tensorflow_mobilenet');
-console.log(metrics.accuracy); // 0.80
-```
+**Test Suite**: 51 tests, 93% coverage  
+**CI/CD**: Automated testing, linting, security scanning  
+**Quality**: Black, isort, ruff, mypy, bandit  
 
 ## Requirements
 
-### Python
-- Python 3.10+
+- Python 3.12+
 - PyTorch 2.0+ with CUDA
 - TensorFlow 2.18+ with GPU
-- OpenCV 4.8+
-- scikit-learn 1.3+
-
-### C++
+- Node.js 18+
 - C++17 compiler
 - CMake 3.15+
-- OpenCV 4.x
-- ONNX Runtime 1.16+
-
-### Frontend
-- Node.js 18+
-- React 18
-- Vite 5
-
-## Built with Kiro CLI
-
-This project was **entirely developed using Kiro CLI**, Amazon Web Services' AI-powered development assistant. Kiro CLI enabled:
-
-- **Rapid Development**: Complete system built systematically
-- **Code Quality**: Professional-grade code generation
-- **Multi-Language**: Seamless Python, C++, JavaScript integration
-- **Best Practices**: Modern patterns and optimizations
-- **Documentation**: Comprehensive guides generated
-- **Testing**: Complete test suite developed
-- **Production Ready**: Docker and deployment configs
-
-**50+ systematic commits** demonstrate AI-assisted development workflow.
-
-Learn more: [AWS Kiro](https://aws.amazon.com/)
+- Docker & Docker Compose
 
 ## Contributing
 
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing`)
-5. Open Pull Request
+3. Run tests (`make test`)
+4. Commit changes (`git commit -m 'Add feature'`)
+5. Push to branch (`git push origin feature/amazing`)
+6. Open Pull Request
 
 ## License
 
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-- PyTorch and TensorFlow teams
-- ONNX Runtime developers
-- OpenCV community
-- React and FastAPI maintainers
-- **Kiro CLI** - Amazon's AI development assistant
+MIT License - see [LICENSE](LICENSE) file
 
 ## Contact
 
@@ -827,4 +183,4 @@ GitHub: [@SkullKrak7](https://github.com/SkullKrak7)
 
 ---
 
-**Status**: Production Ready | GPU Optimized | Docker Ready | Built with Kiro CLI | 50+ Commits
+**Status**: Production Ready | 93% Coverage | GPU Optimized | Docker Ready
