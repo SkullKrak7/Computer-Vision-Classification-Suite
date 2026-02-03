@@ -113,9 +113,9 @@ async def predict(file: UploadFile = File(...)):
                 "class_name": class_names[idx.item()] if idx.item() < len(class_names) else f"class_{idx.item()}",
                 "confidence": prob.item(),
             }
-            for prob, idx in zip(top3.values, top3.indices)
+            for prob, idx in zip(top3.values, top3.indices, strict=False)
         ]
 
         return InferenceResponse(predictions=predictions, inference_time=time.time() - start)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e

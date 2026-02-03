@@ -45,7 +45,7 @@ class ModelTuner:
 
         # Check class imbalance
         unique, counts = np.unique(y_train, return_counts=True)
-        class_dist = dict(zip(unique, counts))
+        class_dist = dict(zip(unique, counts, strict=False))
         logger.info(f"Class distribution: {class_dist}")
 
         imbalance_ratio = max(counts) / min(counts)
@@ -53,7 +53,7 @@ class ModelTuner:
             logger.warning(f"Class imbalance detected: {imbalance_ratio:.2f}x")
             # Compute class weights
             class_weights = compute_class_weight("balanced", classes=unique, y=y_train)
-            class_weights = dict(zip(unique, class_weights))
+            class_weights = dict(zip(unique, class_weights, strict=False))
         else:
             class_weights = None
 

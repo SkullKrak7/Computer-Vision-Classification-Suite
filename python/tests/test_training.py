@@ -13,7 +13,7 @@ def test_config():
     config = TrainingConfig(epochs=10, batch_size=16)
     assert config.epochs == 10
     assert config.batch_size == 16
-    assert config.use_gpu == True
+    assert config.use_gpu
     print(" Training config test passed")
 
 

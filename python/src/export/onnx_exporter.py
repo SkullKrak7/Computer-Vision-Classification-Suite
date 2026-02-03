@@ -65,8 +65,8 @@ class ONNXExporter:
         """
         try:
             import tf2onnx
-        except ImportError:
-            raise ImportError("tf2onnx is required. Install with: pip install tf2onnx")
+        except ImportError as e:
+            raise ImportError("tf2onnx is required. Install with: pip install tf2onnx") from e
 
         from src.models.deep_learning.tf_mobilenet import TFMobileNetClassifier
 

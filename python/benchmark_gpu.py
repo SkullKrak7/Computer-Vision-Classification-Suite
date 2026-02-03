@@ -34,7 +34,7 @@ def benchmark_pytorch():
     train_time = time.time() - start
 
     start = time.time()
-    predictions = model.predict(X_test)
+    model.predict(X_test)
     pred_time = time.time() - start
 
     print(f" Training time: {train_time:.2f}s")
@@ -71,7 +71,7 @@ def benchmark_tensorflow():
     train_time = time.time() - start
 
     start = time.time()
-    predictions = model.predict(X_test)
+    model.predict(X_test)
     pred_time = time.time() - start
 
     print(f" Training time: {train_time:.2f}s")
