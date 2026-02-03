@@ -1,15 +1,14 @@
 """Inference API routes"""
 
-import io
 import time
 from pathlib import Path
 
 import numpy as np
 import torch
 from fastapi import APIRouter, File, HTTPException, UploadFile
-from PIL import Image
 
 from ..models import InferenceResponse
+from ..utils.validation import validate_image_upload
 
 router = APIRouter()
 
@@ -92,9 +91,10 @@ async def predict(file: UploadFile = File(...)):
         raise HTTPException(status_code=503, detail="Model not loaded")
 
     try:
-        # Read and preprocess image (model trained on 64x64)
-        contents = await file.read()
-        image = Image.open(io.BytesIO(contents)).convert("RGB")
+        # Validate image upload (security checks)
+        image, _ = await validate_image_upload(file)
+
+        # Preprocess image (model trained on 64x64)
         image = image.resize((64, 64))
         img_array = np.array(image) / 255.0
         img_tensor = torch.FloatTensor(img_array).permute(2, 0, 1).unsqueeze(0)
