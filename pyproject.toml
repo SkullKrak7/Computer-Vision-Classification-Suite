@@ -54,7 +54,7 @@ ignore = ["E501", "N803", "N806", "B008"]
 testpaths = ["python/tests", "backend/tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
-addopts = "-v --cov=python --cov=backend --cov-report=term-missing --cov-report=xml"
+addopts = "-v --cov=python/src --cov=backend/app --cov-report=term-missing --cov-report=xml --cov-fail-under=80"
 
 
 [tool.bandit]
