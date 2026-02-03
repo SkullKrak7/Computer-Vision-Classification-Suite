@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from .config import settings
 from .middleware import (
     RateLimitMiddleware,
     RequestIDMiddleware,
@@ -22,23 +23,23 @@ logger = get_logger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan events"""
-    logger.info("Starting CV Classification API")
+    logger.info(f"Starting {settings.api_title} v{settings.api_version}")
     yield
     logger.info("Shutting down CV Classification API")
 
 
-app = FastAPI(title="CV Classification API", lifespan=lifespan)
+app = FastAPI(title=settings.api_title, version=settings.api_version, lifespan=lifespan)
 
 # Security middleware
 app.add_middleware(TimingMiddleware)
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RequestIDMiddleware)
-app.add_middleware(RateLimitMiddleware, requests_per_minute=100)
+app.add_middleware(RateLimitMiddleware, requests_per_minute=settings.rate_limit_per_minute)
 
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
