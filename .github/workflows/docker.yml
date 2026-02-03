@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    if: false  # Disabled - docker builds take too long
     runs-on: ubuntu-latest
     permissions:
       contents: read
