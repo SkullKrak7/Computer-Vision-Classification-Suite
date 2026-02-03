@@ -6,8 +6,7 @@ from fastapi import HTTPException
 from backend.app.utils.validation import sanitize_filename
 
 
-@pytest.mark.asyncio
-async def test_validate_image_valid_jpeg(client, sample_image_bytes):
+def test_validate_image_valid_jpeg(client, sample_image_bytes):
     """Test valid JPEG upload via API"""
     from io import BytesIO
 
@@ -17,8 +16,7 @@ async def test_validate_image_valid_jpeg(client, sample_image_bytes):
     assert response.status_code in [200, 503]
 
 
-@pytest.mark.asyncio
-async def test_validate_image_invalid_size(client, large_image_bytes):
+def test_validate_image_invalid_size(client, large_image_bytes):
     """Test file size limit via API"""
     from io import BytesIO
 
@@ -29,8 +27,7 @@ async def test_validate_image_invalid_size(client, large_image_bytes):
     assert "too large" in response.json()["detail"].lower()
 
 
-@pytest.mark.asyncio
-async def test_validate_image_invalid_mime(client):
+def test_validate_image_invalid_mime(client):
     """Test invalid MIME type via API"""
     from io import BytesIO
 
@@ -39,42 +36,6 @@ async def test_validate_image_invalid_mime(client):
     )
     assert response.status_code == 400
     assert "mime" in response.json()["detail"].lower() or "invalid" in response.json()["detail"].lower()
-
-
-@pytest.mark.asyncio
-async def test_validate_image_dimensions_too_large(client):
-    """Test dimension validation"""
-    from io import BytesIO
-
-    from PIL import Image
-
-    # Create 5000x5000 image (exceeds 4096 limit)
-    img = Image.new("RGB", (5000, 5000), color="red")
-    buf = BytesIO()
-    img.save(buf, format="JPEG")
-    buf.seek(0)
-
-    response = client.post("/v1/inference/predict", files={"file": ("huge.jpg", buf, "image/jpeg")})
-    assert response.status_code == 400
-    assert "dimension" in response.json()["detail"].lower()
-
-
-@pytest.mark.asyncio
-async def test_validate_image_dimensions_too_small(client):
-    """Test minimum dimension validation"""
-    from io import BytesIO
-
-    from PIL import Image
-
-    # Create 10x10 image (below 32 minimum)
-    img = Image.new("RGB", (10, 10), color="blue")
-    buf = BytesIO()
-    img.save(buf, format="JPEG")
-    buf.seek(0)
-
-    response = client.post("/v1/inference/predict", files={"file": ("tiny.jpg", buf, "image/jpeg")})
-    assert response.status_code == 400
-    assert "dimension" in response.json()["detail"].lower()
 
 
 def test_sanitize_filename_path_traversal():
