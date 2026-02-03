@@ -1,12 +1,14 @@
 """PyTorch CNN with OOP design"""
 
+import logging
+from pathlib import Path
+
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import TensorDataset, DataLoader
-from pathlib import Path
-import logging
+from torch.utils.data import DataLoader, TensorDataset
+
 from ..base import BaseModel
 
 logger = logging.getLogger(__name__)

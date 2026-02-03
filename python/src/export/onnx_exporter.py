@@ -65,8 +65,8 @@ class ONNXExporter:
         """
         try:
             import tf2onnx
-        except ImportError:
-            raise ImportError("tf2onnx is required. Install with: pip install tf2onnx")
+        except ImportError as e:
+            raise ImportError("tf2onnx is required. Install with: pip install tf2onnx") from e
 
         from src.models.deep_learning.tf_mobilenet import TFMobileNetClassifier
 
@@ -78,9 +78,7 @@ class ONNXExporter:
 
         spec = (tf.TensorSpec(classifier.model.input_shape, tf.float32, name="input"),)
 
-        model_proto, _ = tf2onnx.convert.from_keras(
-            classifier.model, input_signature=spec, opset=11
-        )
+        model_proto, _ = tf2onnx.convert.from_keras(classifier.model, input_signature=spec, opset=11)
 
         with open(output_path, "wb") as f:
             f.write(model_proto.SerializeToString())
@@ -141,9 +139,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Export trained models to ONNX")
     parser.add_argument("model_path", type=str, help="Path to trained model file")
-    parser.add_argument(
-        "--output-dir", type=str, default="models/onnx", help="Output directory for ONNX file"
-    )
+    parser.add_argument("--output-dir", type=str, default="models/onnx", help="Output directory for ONNX file")
     parser.add_argument(
         "--framework",
         type=str,

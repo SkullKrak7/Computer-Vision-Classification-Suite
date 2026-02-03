@@ -1,9 +1,10 @@
 """Base model class with OOP design"""
 
 from abc import ABC, abstractmethod
-from typing import Dict, Tuple
-import numpy as np
 from pathlib import Path
+from typing import Dict, Tuple
+
+import numpy as np
 
 
 class BaseModel(ABC):

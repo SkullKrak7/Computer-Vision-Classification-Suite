@@ -6,9 +6,7 @@ from collections.abc import Callable
 import numpy as np
 
 
-def benchmark_inference(
-    model_predict: Callable, X: np.ndarray, warmup: int = 5, runs: int = 10
-) -> dict:
+def benchmark_inference(model_predict: Callable, X: np.ndarray, warmup: int = 5, runs: int = 10) -> dict:
     """Benchmark model inference speed"""
     # Warmup
     for _ in range(warmup):
