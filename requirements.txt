@@ -24,6 +24,8 @@ fastapi==0.128.0
 uvicorn==0.40.0
 python-multipart==0.0.22
 pydantic==2.12.5
+pydantic-settings==2.8.2
+prometheus-client==0.22.1
 
 # Utilities
 pyyaml==6.0.3

@@ -16,6 +16,7 @@ from .middleware import (
 from .models import ErrorResponse
 from .routes import inference, metrics, training
 from .utils.logging import get_logger
+from .utils.metrics import metrics_endpoint
 
 logger = get_logger(__name__)
 
@@ -77,3 +78,9 @@ def root():
 def health():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+
+@app.get("/metrics")
+def metrics():
+    """Prometheus metrics endpoint"""
+    return metrics_endpoint()

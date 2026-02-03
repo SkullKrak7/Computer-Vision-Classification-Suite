@@ -9,6 +9,7 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 
 from ..models import InferenceResponse
 from ..utils.logging import get_logger
+from ..utils.metrics import inference_count, inference_duration
 from ..utils.validation import validate_image_upload
 
 router = APIRouter()
@@ -123,9 +124,16 @@ async def predict(file: UploadFile = File(...)):
 
         inference_time = time.time() - start
         logger.info(f"Prediction complete in {inference_time:.3f}s: {predictions[0]['class_name']}")
+
+        # Record metrics
+        inference_count.labels(status="success").inc()
+        inference_duration.observe(inference_time)
+
         return InferenceResponse(predictions=predictions, inference_time=inference_time)
     except HTTPException:
+        inference_count.labels(status="error").inc()
         raise
     except Exception as e:
+        inference_count.labels(status="error").inc()
         logger.error(f"Prediction error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e)) from e

@@ -10,6 +10,8 @@ from fastapi import HTTPException, Request, Response, status
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
 
+from .utils.metrics import request_count, request_duration
+
 
 class RateLimitMiddleware(BaseHTTPMiddleware):
     """Rate limiting middleware - 100 requests per minute per IP"""
@@ -77,7 +79,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
 
 class TimingMiddleware(BaseHTTPMiddleware):
-    """Add request timing header"""
+    """Add request timing header and metrics"""
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         """Measure and add request processing time"""
@@ -85,4 +87,9 @@ class TimingMiddleware(BaseHTTPMiddleware):
         response = await call_next(request)
         process_time = time.time() - start_time
         response.headers["X-Process-Time"] = f"{process_time:.4f}"
+
+        # Record metrics
+        request_count.labels(method=request.method, endpoint=request.url.path, status=response.status_code).inc()
+        request_duration.labels(method=request.method, endpoint=request.url.path).observe(process_time)
+
         return response
