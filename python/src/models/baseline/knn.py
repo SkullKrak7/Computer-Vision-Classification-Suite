@@ -1,9 +1,10 @@
 """KNN Classifier"""
 
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import pickle
+
 import numpy as np
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from sklearn.neighbors import KNeighborsClassifier
 
 
 class KNNClassifier:

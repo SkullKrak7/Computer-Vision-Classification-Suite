@@ -14,13 +14,14 @@ if cuda_path.exists():
     os.environ['XLA_FLAGS'] = f'--xla_gpu_cuda_data_dir={cuda_path}'
     os.environ['PATH'] = f"{cuda_path / 'bin'}:{os.environ.get('PATH', '')}"
 
+import logging
+
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-import logging
 
 logger = logging.getLogger(__name__)
 
