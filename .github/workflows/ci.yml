@@ -33,7 +33,7 @@ jobs:
         run: black --check --diff --line-length 120 python/ backend/
 
       - name: Check import sorting (isort)
-        run: isort --check-only --diff python/ backend/
+        run: isort --check-only --diff --profile black --line-length 120 python/ backend/
 
       - name: Lint with ruff
         run: ruff check python/ backend/
