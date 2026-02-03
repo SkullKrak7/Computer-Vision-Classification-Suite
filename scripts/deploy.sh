@@ -23,7 +23,7 @@ PYTHONPATH=. alembic upgrade head
 
 # 4. Run tests
 echo "4. Running tests..."
-PYTHONPATH=. pytest backend/tests/ -q --cov=backend/app --cov-fail-under=50
+PYTHONPATH=. pytest backend/tests/ -q --cov=backend/app --cov-fail-under=80
 
 # 5. Stop existing service
 echo "5. Stopping existing service..."

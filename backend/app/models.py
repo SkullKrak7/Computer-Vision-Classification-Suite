@@ -1,7 +1,8 @@
 """Pydantic models for API"""
 
-from pydantic import BaseModel, Field, field_validator
 from typing import Literal
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class PredictionResponse(BaseModel):
@@ -31,11 +32,13 @@ class MetricsResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     """Error response model"""
+
     detail: str
 
 
 class TrainingConfig(BaseModel):
     """Training configuration with validation"""
+
     model_type: Literal["pytorch", "tensorflow", "keras"]
     dataset_path: str
     epochs: int = Field(default=20, ge=1, le=1000)
@@ -45,6 +48,7 @@ class TrainingConfig(BaseModel):
 
 class DatasetConfig(BaseModel):
     """Dataset configuration with validation"""
+
     dataset_path: str
     train_split: float = Field(default=0.8, ge=0, le=1)
     val_split: float = Field(default=0.1, ge=0, le=1)
@@ -63,5 +67,6 @@ class DatasetConfig(BaseModel):
 
 class ImageUploadRequest(BaseModel):
     """Image upload request"""
+
     filename: str
     content_type: str

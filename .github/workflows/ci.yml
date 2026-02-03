@@ -117,7 +117,7 @@ jobs:
 
       - name: Run backend tests
         run: |
-          pytest backend/tests/ -v --cov=backend/app --cov-report=xml --cov-report=term-missing --cov-fail-under=50
+          pytest backend/tests/ -v --cov=backend/app --cov-report=xml --cov-report=term-missing --cov-fail-under=80
         env:
           PYTHONPATH: ${{ github.workspace }}
 

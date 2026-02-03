@@ -1,17 +1,19 @@
 """Application configuration using Pydantic BaseSettings"""
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Application settings"""
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     # API
     api_title: str = "CV Classification API"
     api_version: str = "1.0.0"
 
     # Server
-    host: str = "0.0.0.0"  # nosec B104 - Required for Docker/container deployments
+    host: str = "0.0.0.0"  # nosec B104
     port: int = 8000
 
     # Security
@@ -27,10 +29,6 @@ class Settings(BaseSettings):
 
     # Logging
     log_level: str = "INFO"
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
 
 
 settings = Settings()

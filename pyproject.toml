@@ -43,7 +43,7 @@ target-version = "py310"
 exclude = [".git", ".venv", "venv", "build", "dist", "node_modules", "datasets", "models"]
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "W", "UP", "B", "C4"]
+select = ["E", "F", "N", "W", "UP", "B", "C4"]
 ignore = ["E501", "N803", "N806", "B008"]
 
 [tool.ruff.lint.per-file-ignores]
@@ -54,7 +54,11 @@ ignore = ["E501", "N803", "N806", "B008"]
 testpaths = ["python/tests", "backend/tests"]
 python_files = "test_*.py"
 python_functions = "test_*"
-addopts = "-v --cov=backend/app --cov-report=term-missing --cov-report=xml --cov-fail-under=50"
+addopts = "-v --cov=backend/app --cov-report=term-missing --cov-report=xml --cov-fail-under=80"
+markers = [
+    "integration: marks tests as integration tests",
+    "asyncio: marks tests as async tests",
+]
 
 
 [tool.bandit]

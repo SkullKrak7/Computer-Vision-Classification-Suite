@@ -1,7 +1,5 @@
 """Tests for error handling"""
 
-import pytest
-
 
 def test_404_error_format(client):
     """Test 404 returns proper error format"""
@@ -80,9 +78,7 @@ def test_error_with_special_characters(client):
     """Test error handling with special characters in input"""
     from io import BytesIO
 
-    response = client.post(
-        "/v1/inference/predict", files={"file": ("test<>|?.jpg", BytesIO(b"data"), "image/jpeg")}
-    )
+    response = client.post("/v1/inference/predict", files={"file": ("test<>|?.jpg", BytesIO(b"data"), "image/jpeg")})
     assert response.status_code in [400, 413, 503]
 
 

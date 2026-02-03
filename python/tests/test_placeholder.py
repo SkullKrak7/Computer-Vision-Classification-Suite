@@ -18,4 +18,3 @@ def test_torch_import():
     import torch
 
     assert torch.tensor([1.0, 2.0]).sum().item() == 3.0
-

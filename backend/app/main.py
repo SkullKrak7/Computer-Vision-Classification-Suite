@@ -7,12 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from .config import settings
-from .middleware import (
-    RateLimitMiddleware,
-    RequestIDMiddleware,
-    SecurityHeadersMiddleware,
-    TimingMiddleware,
-)
+from .middleware import RateLimitMiddleware, RequestIDMiddleware, SecurityHeadersMiddleware, TimingMiddleware
 from .models import ErrorResponse
 from .routes import inference, metrics, training
 from .utils.logging import get_logger

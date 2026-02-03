@@ -52,7 +52,7 @@ async def validate_image_upload(file: UploadFile) -> tuple[Image.Image, str]:
     # Validate file size
     if len(contents) > MAX_FILE_SIZE_BYTES:
         raise HTTPException(
-            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            status_code=status.HTTP_413_CONTENT_TOO_LARGE,
             detail=f"File too large. Maximum size: {MAX_FILE_SIZE_MB}MB",
         )
 
