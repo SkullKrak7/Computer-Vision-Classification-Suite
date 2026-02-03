@@ -139,9 +139,7 @@ class ModelTuner:
             self.best_model = model
             self.best_config = config
 
-        self.history.append(
-            {"iteration": iteration, "config": config, "metrics": metrics, "is_optimal": is_optimal}
-        )
+        self.history.append({"iteration": iteration, "config": config, "metrics": metrics, "is_optimal": is_optimal})
 
         return metrics, is_optimal
 
@@ -152,9 +150,7 @@ class ModelTuner:
         if metrics["gap"] > 0.15:  # Overfitting
             logger.info("Overfitting detected - adjusting...")
             if "dropout" in new_config["model_params"]:
-                new_config["model_params"]["dropout"] = min(
-                    0.7, new_config["model_params"].get("dropout", 0.3) + 0.1
-                )
+                new_config["model_params"]["dropout"] = min(0.7, new_config["model_params"].get("dropout", 0.3) + 0.1)
             new_config["augment"] = True
             new_config["model_params"]["learning_rate"] *= 0.8
 
@@ -163,9 +159,7 @@ class ModelTuner:
             new_config["epochs"] = min(20, new_config["epochs"] + 3)
             new_config["model_params"]["learning_rate"] *= 1.2
             if "dropout" in new_config["model_params"]:
-                new_config["model_params"]["dropout"] = max(
-                    0.1, new_config["model_params"].get("dropout", 0.3) - 0.1
-                )
+                new_config["model_params"]["dropout"] = max(0.1, new_config["model_params"].get("dropout", 0.3) - 0.1)
 
         return new_config
 
@@ -200,9 +194,7 @@ class ModelTuner:
 
         # Iterative tuning
         for i in range(1, max_iterations + 1):
-            metrics, is_optimal = self.tune_iteration(
-                config, X_train, y_train, X_val, y_val, label_map, i
-            )
+            metrics, is_optimal = self.tune_iteration(config, X_train, y_train, X_val, y_val, label_map, i)
 
             if is_optimal:
                 logger.info(f"\nOptimal configuration found at iteration {i}!")

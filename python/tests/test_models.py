@@ -63,9 +63,7 @@ if __name__ == "__main__":
 
     try:
         ModelTester(PyTorchCNNClassifier, "PyTorch CNN").test_all(use_amp=True)
-        ModelTester(TFMobileNetClassifier, "TensorFlow MobileNet").test_all(
-            use_mixed_precision=True
-        )
+        ModelTester(TFMobileNetClassifier, "TensorFlow MobileNet").test_all(use_mixed_precision=True)
         print("\nAll tests passed!")
     except Exception as e:
         print(f"\nTest failed: {e}")

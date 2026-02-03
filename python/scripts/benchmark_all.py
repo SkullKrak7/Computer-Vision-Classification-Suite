@@ -44,9 +44,7 @@ def main():
     print("Model Benchmark Comparison")
     print("=" * 60 + "\n")
 
-    (X_train, X_test, y_train, y_test), labels = load_dataset(
-        "datasets/custom", img_size=(224, 224)
-    )
+    (X_train, X_test, y_train, y_test), labels = load_dataset("datasets/custom", img_size=(224, 224))
 
     results = []
 
@@ -85,9 +83,7 @@ def main():
     print("-" * 60)
 
     for result in results:
-        print(
-            f"{result['model']:<30} {result['accuracy']:<12.2%} {result['inference_time_per_sample_ms']:.2f}"
-        )
+        print(f"{result['model']:<30} {result['accuracy']:<12.2%} {result['inference_time_per_sample_ms']:.2f}")
 
     print("=" * 60 + "\n")
 

@@ -64,13 +64,9 @@ if __name__ == "__main__":
         default="pytorch",
         help="Model to train",
     )
-    parser.add_argument(
-        "--data", type=str, default="datasets/custom", help="Path to dataset directory"
-    )
+    parser.add_argument("--data", type=str, default="datasets/custom", help="Path to dataset directory")
     parser.add_argument("--epochs", type=int, default=20, help="Number of training epochs")
-    parser.add_argument(
-        "--fine-tune", action="store_true", help="Fine-tune MobileNet layers (TensorFlow only)"
-    )
+    parser.add_argument("--fine-tune", action="store_true", help="Fine-tune MobileNet layers (TensorFlow only)")
 
     args = parser.parse_args()
 
