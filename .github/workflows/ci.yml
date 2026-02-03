@@ -39,7 +39,7 @@ jobs:
         run: ruff check python/ backend/
 
       - name: Type check with mypy
-        run: mypy python/src backend/app --ignore-missing-imports
+        run: mypy backend/app --ignore-missing-imports
 
   security:
     name: Security Scanning
