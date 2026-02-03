@@ -56,14 +56,14 @@ Strict-Transport-Security: max-age=31536000
 
 ## Best Practices
 
-✅ **Do**:
+[x] **Do**:
 - Use environment variables for secrets
 - Validate all inputs
 - Use HTTPS in production
 - Keep dependencies updated
 - Run security scans regularly
 
-❌ **Don't**:
+[ ] **Don't**:
 - Hardcode secrets
 - Trust user input
 - Expose internal errors

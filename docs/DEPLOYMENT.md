@@ -2,7 +2,7 @@
 
 ## What's Production-Ready
 
-✅ **Implemented**:
+[x] **Implemented**:
 - 93% test coverage
 - CI/CD pipeline
 - Docker containerization

@@ -135,11 +135,11 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install safety
-        run: pip install safety==3.2.11
+        run: pip install safety==3.2.11 typer==0.12.5
 
       - name: Check dependencies for vulnerabilities
         run: safety check --file requirements.txt --output text
-        continue-on-error: true  # Don't fail build, but report
+        continue-on-error: true
 
   docker-build:
     name: Docker Build Test

@@ -97,8 +97,8 @@ Tests run automatically on:
 - Before merge
 
 Checks:
-- ✅ All tests pass
-- ✅ Coverage ≥80%
-- ✅ No linting errors
-- ✅ Type checking passes
-- ✅ Security scan clean
+- [x] All tests pass
+- [x] Coverage ≥80%
+- [x] No linting errors
+- [x] Type checking passes
+- [x] Security scan clean
