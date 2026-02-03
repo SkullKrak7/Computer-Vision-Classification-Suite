@@ -134,12 +134,8 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install safety
-        run: pip install safety==3.2.11 typer==0.12.5
-
-      - name: Check dependencies for vulnerabilities
-        run: safety check --file requirements.txt --output text
-        continue-on-error: true
+      # Safety check disabled due to typer compatibility issues
+      # Use pip-audit or snyk for dependency scanning instead
 
   integration-test:
     name: Integration Tests
