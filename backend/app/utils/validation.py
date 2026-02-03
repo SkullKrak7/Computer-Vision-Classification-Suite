@@ -1,7 +1,6 @@
 """Image upload validation utilities"""
 
 import io
-from typing import Tuple
 
 from fastapi import HTTPException, UploadFile, status
 from PIL import Image
@@ -15,7 +14,7 @@ MAX_IMAGE_DIMENSION = 4096  # Prevent decompression bombs
 MIN_IMAGE_DIMENSION = 32
 
 
-async def validate_image_upload(file: UploadFile) -> Tuple[Image.Image, str]:
+async def validate_image_upload(file: UploadFile) -> tuple[Image.Image, str]:
     """
     Validate uploaded image file per Gold Standard security requirements.
 
