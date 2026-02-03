@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     # Model
     model_path: str = "models/pytorch_cnn_tuned.pth"
 
+    # Database
+    database_url: str = "sqlite:///./cv_classification.db"
+
     # Logging
     log_level: str = "INFO"
 

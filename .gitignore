@@ -249,6 +249,15 @@ secrets.yaml
 credentials.json
 
 # ========================================
+# DATABASE
+# ========================================
+*.db
+*.sqlite
+*.sqlite3
+migrations/versions/*.py
+!migrations/versions/.gitkeep
+
+# ========================================
 # LOGS & TEMPORARY FILES
 # ========================================
 *.log
