@@ -25,7 +25,9 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 
         # Clean old requests (older than 1 minute)
         now = datetime.now()
-        self.requests[client_ip] = [req_time for req_time in self.requests[client_ip] if now - req_time < timedelta(minutes=1)]
+        self.requests[client_ip] = [
+            req_time for req_time in self.requests[client_ip] if now - req_time < timedelta(minutes=1)
+        ]
 
         # Check rate limit
         if len(self.requests[client_ip]) >= self.requests_per_minute:

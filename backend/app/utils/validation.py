@@ -66,9 +66,7 @@ async def validate_image_upload(file: UploadFile) -> Tuple[Image.Image, str]:
 
         # Verify image format matches extension
         if image.format.lower() not in {"jpeg", "jpg", "png"}:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid image format: {image.format}"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid image format: {image.format}")
 
         # Validate image dimensions (prevent decompression bombs)
         width, height = image.size
@@ -93,9 +91,7 @@ async def validate_image_upload(file: UploadFile) -> Tuple[Image.Image, str]:
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid image file: {str(e)}"
-        ) from e
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid image file: {str(e)}") from e
 
 
 def sanitize_filename(filename: str) -> str:
